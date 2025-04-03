@@ -1,0 +1,26 @@
+joycetj        
+1-1= G-245 source 1
+1-2= G-245 source 2
+
+---------------------------------------------------------------------------
+
+joycetj---        01-Apr-2025 16:30:23      success     
+Wafer number 1., wafer type 1.-1. for 60. at 1050.
+joycetj        02-Apr-2025 11:44:10      joycetj        02-Apr-2025 16:56:33      success Wafer number 3.000000
+, wafer type 1.000000-1.000000 for 60.000000 at 1050.000000
+joycetj        02-Apr-2025 16:59:02      joycetj        02-Apr-2025 17:00:05      success Wafer number 1.000000
+, wafer type 1.000000-1.000000 for 30.000000 at 1050.000000
+joycetj        02-Apr-2025 17:03:25      joycetj        02-Apr-2025 18:08:08      joycetj        02-Apr-2025 18:10:49      joycetj        02-Apr-2025 18:11:37      success Wafer number 5.000000
+, wafer type 1.000000-1.000000 for 30.000000 at 1050.000000
+joycetj        02-Apr-2025 18:21:13      joyetj        02-Apr-2025 18:25:13      success Wafer number 3.000000
+, wafer type 1.000000-1.000000 for 30.000000 at 1050.000000
+joycetj        02-Apr-2025 18:26:24      joycetj        02-Apr-2025 18:26:40      success Wafer number 4.000000
+, wafer type 1.000000-1.000000 for 30.000000 at 1050.000000
+joycetj        02-Apr-2025 18:28:46      success Wafer number 2.000000
+, wafer type 1.000000-1.000000 for 30.000000 at 1050.000000
+joycetj        02-Apr-2025 18:30:47      success Wafer number 4.000000
+, wafer type 1.000000-1.000000 for 30.000000 at 1050.000000
+joycetj        02-Apr-2025 18:37:06      success Wafer number 1.000000
+, wafer type 1.000000-1.000000 for 30.000000 at 1050.000000
+joycetj        02-Apr-2025 18:50:30      success Wafer number 1.000000
+, wafer type 1.000000-1.000000 for 60.000000 at 1050.000000
