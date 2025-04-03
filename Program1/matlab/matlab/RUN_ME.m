@@ -25,15 +25,9 @@ s=31;%size of one data entry
 %   Standard currents
 %
 
-stand1=[10,100,1000];
-stand2=[0,0,0];
-stand3=[0,0,0];
-stand4=[0,0,0];
-stand5=[0,0,0];
-stand6=[0,0,0];
-stand7=[0,0,0];
-stand8=[0,0,0];
-stand9=[0,0,0];
+[stand1,stand2,stand3,stand4,stand5,stand6,stand7,stand8,stand9]=stored();
+clc
+
 
 %
 %Checks for valid path
@@ -41,7 +35,7 @@ try
     readmatrix(path);
 catch
     clc
-    warning('Irregular Path to excel sheet. Please input path.Please ensure excel file is closed','s')
+    warning('Irregular Path to excel sheet. Please input path.Please ensure excel file is closed')
     path=input('\nPlease input path\n','s');
    
  
@@ -186,10 +180,21 @@ end
        %compressed into not this mess.
     elseif sourcet==2
     end
+
+
     end
+elseif initial==2
 
-
+      fprintf('Which standard input do you wish to change?\n1. %1d,%1d,%1d       2. %1d,%1d,%1d       3. %1d,%1d,%1d\n4. %1d,%1d,%1d       5.%1d,%1d,%1d       6. %1d,%1d,%1d\n7. %1d,%1d,%1d       8. %1d,%1d,%1d      9. %1d,%1d,%1d\nAll in microamps\n',stand1,stand2,stand3,stand4,stand5,stand6,stand7,stand8,stand9);
+         stande=input('');
+         clc
+         v=input('What values do you wish to change it to?\n Note: Please only enter positive values as it is assumed you are using both the forward and reverse\nOnly enter up to 5 voltages to fit format of excel\nUse format [current1,current2,current3...current5]\n');
+         standeditor(stande,v);
+         [stand1,stand2,stand3,stand4,stand5,stand6,stand7,stand8,stand9]=stored();
+         fprintf('stand %d has been changed\n',stande)
 end
+
+
 
 
 
