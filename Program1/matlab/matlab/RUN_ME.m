@@ -192,6 +192,17 @@ elseif initial==2
          standeditor(stande,v);
          [stand1,stand2,stand3,stand4,stand5,stand6,stand7,stand8,stand9]=stored();
          fprintf('stand %d has been changed\n',stande)
+elseif initial==3
+elseif initial==4
+    temp=input('what temperture did you run pre-dep at in Celsius? (Zone 3)\n');  
+    time=input('How long where the wafers in the furnace? (minutes)\n'); 
+    sourcet=input('What type of source did you use?\n1. G245\n');
+    if sourcet==1
+        source=input('Which source did you use?\n1. G245-1     2. G245-2\n');
+    else
+        source=1;
+    graphplotter(temp,time,sourcet,source)
+    
 end
 
 
