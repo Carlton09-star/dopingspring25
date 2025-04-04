@@ -208,7 +208,7 @@ elseif initial==4
     end
 %%
     graphplotter(temp,time,sourcet,source)
-    end
+end
 
 
 
