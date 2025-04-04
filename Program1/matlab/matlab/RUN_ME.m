@@ -31,18 +31,19 @@ clc
 
 %
 %Checks for valid path
+
 try
     readmatrix(path);
 catch
     clc
-    warning('Irregular Path to excel sheet. Please input path.Please ensure excel file is closed')
+    warning('Irregular Path to excel sheet. Please input path.Please ensure excel file is closed ensure there are no quotes around the path')
     path=input('\nPlease input path\n','s');
    
  
 end
 
 %Which function to run
-initial=input('Select one by typing the number next to the option\n1. Enter Data\n2. Add new Parameter setting\n3. Edit Standard voltage reading\n');
+initial=input('Select one by typing the number next to the option\n1. Enter Data\n2. Add new Parameter setting\n3. Edit Standard voltage reading\n4. Display graph\n');
 clc
 %%
 %
@@ -67,7 +68,7 @@ fprintf(file,'%s        %s      ',user,t);
     source=input('Which source did you use?\n1. G245-1     2. G245-2\n');
     type="boron";
     sheet=1;
-    
+    clc
     %
     %   Backround profiling
     %
@@ -140,7 +141,8 @@ fprintf(file,'%s        %s      ',user,t);
 if collums==-1
     error(('invalid paramters for source double check entered parameters match what is allowed with source and set as an option in this program.'))
 end
-     %%
+   %%
+   
         coll=numtol(collums);
         coole=numtol(collums+s-1);
         colr=sprintf('%s:%s',coll,coole);
@@ -171,6 +173,7 @@ end
       %% 
        writematrix(tot,path,'Sheet',type,'FileType','spreadsheet','Range',range)
        writecell({backsheet,subst,bdt},path,'Sheet',type,'FileType','spreadsheet','Range',range3)
+       datastorer(temp,time,sourcet,source,wafernumber,peakconc)
 %%
        fprintf(file,'success Wafer number %3f\n, wafer type %3f-%3f for %3f at %3f\n',wafernumber,sourcet,source,time,temp);
        fclose(file);
@@ -192,6 +195,7 @@ elseif initial==2
          standeditor(stande,v);
          [stand1,stand2,stand3,stand4,stand5,stand6,stand7,stand8,stand9]=stored();
          fprintf('stand %d has been changed\n',stande)
+           fprintf('New Standard Inputs\n1. %1d,%1d,%1d       2. %1d,%1d,%1d       3. %1d,%1d,%1d\n4. %1d,%1d,%1d       5.%1d,%1d,%1d       6. %1d,%1d,%1d\n7. %1d,%1d,%1d       8. %1d,%1d,%1d      9. %1d,%1d,%1d\nAll in microamps\n',stand1,stand2,stand3,stand4,stand5,stand6,stand7,stand8,stand9);
 elseif initial==3
 elseif initial==4
     temp=input('what temperture did you run pre-dep at in Celsius? (Zone 3)\n');  
@@ -201,9 +205,12 @@ elseif initial==4
         source=input('Which source did you use?\n1. G245-1     2. G245-2\n');
     else
         source=1;
+    end
+%%
     graphplotter(temp,time,sourcet,source)
-    
-end
+    end
+
+
 
 
 
