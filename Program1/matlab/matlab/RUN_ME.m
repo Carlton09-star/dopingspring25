@@ -17,7 +17,9 @@ clear variables
 %
 
 user=input('What is your Rose-Hulman username?\n','s');
-path="D:\Data\doping_data.xlsx";
+path="D:\dopingspring25\data\doping_data.xlsx";
+
+
 s=31;%size of one data entry
 
 
@@ -30,7 +32,8 @@ clc
 
 
 %
-%Checks for valid path
+%   Checks for valid path
+%
 
 try
     readmatrix(path);
@@ -43,12 +46,15 @@ catch
 end
 
 %Which function to run
-initial=input('Select one by typing the number next to the option\n1. Enter Data\n2. Add new Parameter setting\n3. Edit Standard voltage reading\n4. Display graph\n');
+initial=input('Select one by typing the number next to the option\n1. Enter Data\n2. Edit Standard Voltage Reading\n3. Add new Paramter group\n4. Display graph\n');
 clc
+
 %%
-%
 %                            option 1 input data
-%
+%%
+
+%Choose how many wafers to enter and input backround profiling if it's all
+%the same
 if initial==1
     wafn=input('How many Wafers do you wish to enter?\n');
     loopcondense=input('Do they all have the same backround profile?\n1. Yes        2. No\n');
@@ -56,11 +62,16 @@ if loopcondense==1
      [backsheet,subst,bdt]=backroundprofile();
 else
 end
+
+
     for i=1:wafn   %repeats so you can repeatedly put in data
+
+%User data storage for the user log
 t = datetime('now');
 t=datestr(t);
 file=fopen('user_log.txt','a');
 fprintf(file,'%s        %s      ',user,t);
+
         
         %fill in with other types later and expand if statement
     sourcet=input('What type of source did you use?\n1. G245\n');   %what type of source did you use put above stuff under this
@@ -94,7 +105,8 @@ fprintf(file,'%s        %s      ',user,t);
     stand=input('did you use a standard input current?\n1. yes\n2. no\n'); 
     if stand==1
         fprintf('It is assumed you used both the positive and negative currents listed in the options\n')
-        fprintf('Which option in Micro amps?\n1. %1d,%1d,%1d       2. %1d,%1d,%1d       3. %1d,%1d,%1d\n4. %1d,%1d,%1d       5.%1d,%1d,%1d       6. %1d,%1d,%1d\n7. %1d,%1d,%1d       8. %1d,%1d,%1d      9. %1d,%1d,%1d\nAll in microamps\n',stand1,stand2,stand3,stand4,stand5,stand6,stand7,stand8,stand9);
+        fprintf('Which option in Micro amps?\n')
+        standprinter()
         choice=input('');
         if choice==1
            in=[stand1*10^(-3),-stand1*10^(-3)];           
@@ -193,9 +205,11 @@ elseif initial==2
          clc
          v=input('What values do you wish to change it to?\n Note: Please only enter positive values as it is assumed you are using both the forward and reverse\nOnly enter up to 5 voltages to fit format of excel\nUse format [current1,current2,current3...current5]\n');
          standeditor(stande,v);
+         clc
          [stand1,stand2,stand3,stand4,stand5,stand6,stand7,stand8,stand9]=stored();
          fprintf('stand %d has been changed\n',stande)
-           fprintf('New Standard Inputs\n1. %1d,%1d,%1d       2. %1d,%1d,%1d       3. %1d,%1d,%1d\n4. %1d,%1d,%1d       5.%1d,%1d,%1d       6. %1d,%1d,%1d\n7. %1d,%1d,%1d       8. %1d,%1d,%1d      9. %1d,%1d,%1d\nAll in microamps\n',stand1,stand2,stand3,stand4,stand5,stand6,stand7,stand8,stand9);
+           fprintf('New Standard Inputs\n')
+           standprinter()
 elseif initial==3
 elseif initial==4
     temp=input('what temperture did you run pre-dep at in Celsius? (Zone 3)\n');  
