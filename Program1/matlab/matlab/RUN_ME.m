@@ -26,6 +26,12 @@ s=31;%size of one data entry
 %
 %   Standard currents
 %
+try
+    readmatrix(path);
+catch
+    clc
+    warning('Irregular Path to excel sheet. Please input path.Please ensure excel file is closed ensure there are no quotes around the path')
+    path=input('\nPlease input path\n','s');
 
 [stand1,stand2,stand3,stand4,stand5,stand6,stand7,stand8,stand9]=stored();
 clc
@@ -35,12 +41,7 @@ clc
 %   Checks for valid path
 %
 
-try
-    readmatrix(path);
-catch
-    clc
-    warning('Irregular Path to excel sheet. Please input path.Please ensure excel file is closed ensure there are no quotes around the path')
-    path=input('\nPlease input path\n','s');
+
    
  
 end
@@ -375,22 +376,34 @@ elseif initial==5
     sheetres=filen(4:end,25);
     junct=filen(4:end,27);
     %Records the average standard deviation and standard error from the
-    %data sets
-    [avgpeak,stddpeak,stepeak]=stat(peakconcr,wafn);
-    [avgsheet,stddsheet,stesheet]=stat(sheetres,wafn);
-    [agjunc,stddjunc,stejunc]=stat(junct,wafn);
 
-    %
-    %   Write an fprintf statement to a text file with those values tada
-    %   too lazy to do it today
-    %
-    
- 
-    
-    
-        
+    [avgpeak,stdpeak,stepeak]=stat(peakconcr,wafn);
+    [avgsheet,stdsheet,stesheet]=stat(sheetres,wafn);  
+    [agjunc,stdjunc,stejunc]=stat(junct,wafn);
+    %records time for file name
+    t=datetime('now','InputFormat','yyyy-MM-dd');
+    dat=string(t,"yyyy-MM-dd");
 
-    %%  
+    %Creates a good file name
+    name=sprintf('%d_%d_%d_%d.xlsx',temp,time,sourcet,source);
+    part1="D:\dopingspring25\data\Stats\";
+    file=part1+dat+"-"+name;
+
+
+    %Prints data and titles to file
+    writecell({"Junction depth"},file,'Sheet','Sheet1','Range','B1');
+    writecell({"Peak concentration"},file,'Range','C1');
+    writecell({"Sheet Resistance"},file,'Range','D1');
+    writecell({"Average"},file,'Range','A2');
+    writecell({"Standard Deviation"},file,'Range','A3');
+    writecell({"Standard error"},file,'Range','A4');
+    A=[agjunc;stdjunc;stejunc];
+    B=[avgpeak;stdpeak;stepeak];
+    C=[avgsheet;stdsheet;stesheet];
+    D=[A,B,C];
+    writematrix(D,file,'Range','B2:D4')
+     
+
 
 
 
