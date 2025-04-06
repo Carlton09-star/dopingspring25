@@ -152,9 +152,14 @@ fprintf(file,'%s        %s      ',user,t);
   
     %Giant data table of where collums start in excel
     collums=collumfinderb(sourcet,source,temp,time,s);
-if collums==-1
+
+    if collums==-1
+        collums=extractor(sourcet,source,temp,time);
+    end
+    %If it is still = to -1
+    if collums==-1
     error(('invalid paramters for source double check entered parameters match what is allowed with source and set as an option in this program.'))
-end
+    end
    %%
    
         coll=numtol(collums);
@@ -260,6 +265,10 @@ end
   
     %Edit this so that it works for gs-245
     collums=collumfinderb(sourcet,source,temp,time,s);
+    if collums==-1
+        collums=extractor(temp,time,source,sourcet);
+    end
+
 if collums==-1
     error(('invalid paramters for source double check entered parameters match what is allowed with source and set as an option in this program.'))
 end
@@ -330,12 +339,22 @@ elseif initial==2
            fprintf('New Standard Inputs\n')
            standprinter()
 elseif initial==3
+    temp=input('what new input temperture do you want to add (Celcius)?\n');
+    time=input('what time do you wish to add (minutes)?\n');
+    sourcet=input('What type of source did you use?\n1. GS-245\n2. GS-139\n');
+    source=input('Which source are you using? (Use 1 if there is only one of that source).\n');
+    clc
+    updater(temp,time,source,sourcet,path)
+    fprintf('New Paramter Added\n')
+
+
+
 elseif initial==4
     temp=input('what temperture did you run pre-dep at in Celsius? (Zone 3)\n');  
     time=input('How long where the wafers in the furnace? (minutes)\n'); 
-    sourcet=input('What type of source did you use?\n1. G245\n');
+    sourcet=input('What type of source did you use?\n1. GS-245\n2. GS-139');
     if sourcet==1
-        source=input('Which source did you use?\n1. G245-1     2. G245-2\n');
+        source=input('Which source did you use?\n1. GS-245-1     2. GS-245-2\n');
     else
         source=1;
     end
