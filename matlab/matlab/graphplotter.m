@@ -2,6 +2,12 @@ function []=graphplotter(temp,time,sourcet,source)
 name=sprintf('%d_%d_%d_%d.csv',temp,time,sourcet,source);
 part1="D:\dopingspring25\data\plots\";
 name1=part1+name;
+try 
+    readmatrix(name1)
+catch
+    error('No data for Parameters exists')
+end
+
 data=readmatrix(name1);
 [col,~]=size(data);
 x=data(1:2:end);

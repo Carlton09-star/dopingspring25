@@ -3,6 +3,10 @@ if sourcet==1
     sheet="GS-245";
 elseif sourcet==2
     sheet="GS-129";
+elseif sourcet==3
+    sheet="TP-250";
+elseif sourcet==4
+    sheet="TP-470";
 end
 
 dat=readmatrix(path,'Sheet',sheet);
@@ -15,36 +19,49 @@ var=sprintf('%d%d%d%d',temp,time,source,sourcet);
 %In all honesty I'm not complety sure if this will only ever generate
 %unique variable names or if it will ever repeat If there is an issue with
 %new 
+
+var=str2double(var);
 var=numtol(var);
 
 
 
-% Step 3: Write the JSON string to a file
-filename = 'D:\dopingspring25\updatedcol.json';
 
-% Step 1: Read the existing JSON file
-    fid = fopen(filename, 'r');
-    raw = fread(fid, inf);
-    str = char(raw');
-    fclose(fid);
-    data = jsondecode(str);
+filename = "D:\dopingspring25\data\json\"+var+".json";
 
-% Step 2: Modify the data
-newEntry = struct(var,s);
-if isfield(data, 'entries')
-    data.entries(end+1) = newEntry;
-else
-    data.entries = newEntry;
-end
+data=struct('rowstart',s);
 
-% Step 3: Write the modified data back to the JSON file
-jsonStr = jsonencode(data);
+jsonText=jsonencode(data);
+
 fid = fopen(filename, 'w');
 if fid == -1
-    error('Cannot open file for writing.');
+    error('Cannot create JSON file');
 end
-fwrite(fid, jsonStr, 'char');
+fwrite(fid, jsonText, 'char');
 fclose(fid);
 
+
+
+
+
+col1=numtol(s);
+col2=numtol(s+14);
+range1=sprintf('%s3:%s3',col1,col2);
+col3=numtol(s+15);
+col4=numtol(s+25);
+range2=sprintf('%s3:%s3',col3,col4);
+col5=numtol(s+26);
+col6=numtol(s+32);
+range3=sprintf('%s3:%s3',col5,col6);
+range4=sprintf('%s2:%s2',col1,col2);
+cells1={"Wafer #","zone 1 temp","zone 2 temp","zone 3 temp","input Current (A)"};
+cells2={"Reading (V)"};
+cells3={"Sheet Resistance","diffusion length (microns)","junction depth (microns)","Peak concentration","Backround Sheet resistance","Substrate","Backround doping device"};
+writecell(cells1,path,'Sheet',sheet,'Range',range1)
+writecell(cells2,path,'Sheet',sheet,'Range',range2)
+writecell(cells3,path,'Sheet',sheet,'Range',range3)
+
+name=sprintf('%d degrees Celcius for %d minutes source %d',temp,time,source);
+
+writematrix(name,path,'Sheet',sheet,'Range',range4)
 
 end

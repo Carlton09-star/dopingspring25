@@ -3,7 +3,7 @@
 %
 %   Written By: TJ Joyce
 %   Assisted By: Inniyew Tesfaw
-%   Tested By:  Ethan Walls
+%   Tested By:  Ethan Walls, Peter Fields
 %--------------------------------------------------------------------------
 
 
@@ -27,11 +27,12 @@ s=31;%size of one data entry
 %   Standard currents
 %
 try
-    readmatrix(path);
+    readmatrix(path,'Range','A1:A1');
 catch
     clc
     warning('Irregular Path to excel sheet. Please input path.Please ensure excel file is closed ensure there are no quotes around the path')
     path=input('\nPlease input path\n','s');
+end
 
 [stand1,stand2,stand3,stand4,stand5,stand6,stand7,stand8,stand9]=stored();
 clc
@@ -44,7 +45,7 @@ clc
 
    
  
-end
+
 
 %Which function to run
 initial=input('Select one by typing the number next to the option\n1. Enter Data\n2. Edit Standard Voltage Reading\n3. Add new Paramter group\n4. Display graph\n5. Data analysis\n');
@@ -66,7 +67,9 @@ end
 
 
     for i=1:wafn   %repeats so you can repeatedly put in data
-
+    if wafn^2<0
+        error(':/ That is an imaginary number my friend')
+    end
 %User data storage for the user log
 t = datetime('now');
 t=datestr(t);
@@ -75,7 +78,7 @@ fprintf(file,'%s        %s      ',user,t);
 
         
         %fill in with other types later and expand if statement
-    sourcet=input('What type of source did you use?\n1. GS-245\n2. GS-139 ');   %what type of source did you use put above stuff under this
+    sourcet=input('What type of source did you use?\n1. GS-245\n2. GS-139\n');   %what type of source did you use put above stuff under this
     if sourcet==1
     source=input('Which source did you use?\n1. G245-1     2. G245-2\n');
     type="boron";
@@ -104,7 +107,8 @@ fprintf(file,'%s        %s      ',user,t);
 
 
 
-    stand=input('did you use a standard input current?\n1. yes\n2. no\n'); 
+    stand=input('did you use a standard input current? Do not use if for one of your input currents you did not get a return voltage\n1. yes\n2. no\n'); 
+    clc
     if stand==1
         fprintf('It is assumed you used both the positive and negative currents listed in the options\n')
         fprintf('Which option in Micro amps?\n')
@@ -133,11 +137,11 @@ fprintf(file,'%s        %s      ',user,t);
         %Not a custom input
         
     elseif stand==2
-        in=input('what were your input currents in microamps? [current 1,current 2,...,current n]\n');
+        in=input('what were your input currents in microamps? [current 1,current 2,...,current n]\nNote If there is no associated output value do not include it\n');
     end
     clc
 
-    out=input('What was your output voltages in mV? [voltage1, voltage2,...,voltagen]\nEnter these in the same order as your input currents\nNote:If using standard input record all positive current then all negative current voltages\nuse ~ if there is no input\n');
+    out=input('What was your output voltages in mV? [voltage1, voltage2,...,voltagen]\nEnter these in the same order as your input currents (There should be twice as many)\nNote:If using standard input record all positive current then all negative current voltages\n');
   sheetresistance=slopes(in,out);
   in=setsize(in);
   out=setsize(out);
@@ -149,12 +153,13 @@ fprintf(file,'%s        %s      ',user,t);
   
   
 
-  
+  %%
     %Giant data table of where collums start in excel
     collums=collumfinderb(sourcet,source,temp,time,s);
 
     if collums==-1
-        collums=extractor(sourcet,source,temp,time);
+        collums=extractor(temp,time,source,sourcet);
+        
     end
     %If it is still = to -1
     if collums==-1
@@ -167,8 +172,8 @@ fprintf(file,'%s        %s      ',user,t);
         colr=sprintf('%s:%s',coll,coole);
        
        colr3=numtol(collums+s-3);
-       
-        
+    
+
         filen=readmatrix(path,'sheet',sheet,'range',colr);
        
 
@@ -217,7 +222,9 @@ fprintf(file,'%s        %s      ',user,t);
     clc 
 
 
-     stand=input('did you use a standard input current?\n1. yes\n2. no\n'); 
+     stand=input('did you use a standard input current? Do not use if one of your input currents did not return a voltage\n1. yes\n2. no\n'); 
+     clc
+
     if stand==1
         fprintf('It is assumed you used both the positive and negative currents listed in the options\n')
         fprintf('Which option in Micro amps?\n')
@@ -246,11 +253,11 @@ fprintf(file,'%s        %s      ',user,t);
         %Not a custom input
         
     elseif stand==2
-        in=input('what were your input currents in microamps? [current 1,current 2,...,current n]\n');
+        in=input('what were your input currents in microamps? [current 1,current 2,...,current n]\nIf there is no associated output value do not include it');
     end
     clc
 
-    out=input('What was your output voltages in mV? [voltage1, voltage2,...,voltagen]\nEnter these in the same order as your input currents\nNote:If using standard input record all positive current then all negative current voltages\nuse ~ if there is no input\n');
+    out=input('What was your output voltages in mV? [voltage1, voltage2,...,voltagen]\nEnter these in the same order as your input currents (There should be twice as many)\nNote:If using standard input record all positive current then all negative current voltages\n');
   sheetresistance=slopes(in,out);
   in=setsize(in);
   out=setsize(out);
@@ -343,8 +350,11 @@ elseif initial==3
     time=input('what time do you wish to add (minutes)?\n');
     sourcet=input('What type of source did you use?\n1. GS-245\n2. GS-139\n');
     source=input('Which source are you using? (Use 1 if there is only one of that source).\n');
+  
     clc
+    %%
     updater(temp,time,source,sourcet,path)
+    %%
     fprintf('New Paramter Added\n')
 
 
@@ -352,7 +362,7 @@ elseif initial==3
 elseif initial==4
     temp=input('what temperture did you run pre-dep at in Celsius? (Zone 3)\n');  
     time=input('How long where the wafers in the furnace? (minutes)\n'); 
-    sourcet=input('What type of source did you use?\n1. GS-245\n2. GS-139');
+    sourcet=input('What type of source did you use?\n1. GS-245\n2. GS-139\n');
     if sourcet==1
         source=input('Which source did you use?\n1. GS-245-1     2. GS-245-2\n');
     else
@@ -379,12 +389,22 @@ elseif initial==5
     end
     collums=collumfinderb(sourcet,source,temp,time,s);
     if collums==-1
+        collums=extractor(temp,time,source,sourcet);
+    end
+
+    if collums==-1
     error(('invalid paramters for source double check entered parameters match what is allowed with source and set as an option in this program.'))
     end
     
     coll=numtol(collums);
     coole=numtol(collums+s-1);
     colr=sprintf('%s:%s',coll,coole);
+    try
+        readmatrix(path,'sheet',sheet,'range',colr);
+    catch
+        error('No such data exists');
+    end
+
     filen=readmatrix(path,'sheet',sheet,'range',colr);
     tables(temp,time,source,sourcet,filen)
     wafn=max(filen(:,1));    
@@ -421,6 +441,8 @@ elseif initial==5
     C=[avgsheet;stdsheet;stesheet];
     D=[A,B,C];
     writematrix(D,file,'Range','B2:D4')
+
+    fprintf('       MEAN       Standard deviation      Standard error\njunction depth       %d      %d      %d\nPeak concentration      %d      %d      %d\nSheet Resistance        %d      %d      %d',agjunc,stdjunc,stejunc,avgpeak,stdpeak,stepeak,avgsheet,stdsheet,stesheet);
      
 
 

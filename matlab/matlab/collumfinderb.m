@@ -30,7 +30,9 @@ elseif sourcet==2
             end
     end
 end
-if cols==[]
+if isempty(cols) ==0
+    
+elseif isempty(cols)==1
     cols=-1;
 end
 
