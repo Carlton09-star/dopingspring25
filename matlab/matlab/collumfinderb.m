@@ -29,6 +29,28 @@ elseif sourcet==2
                         end
             end
     end
+elseif sourcet==3
+    for k=750:25:1000
+        for n=30:30:120
+            m=m+1;
+            if k==temp
+                if n==time 
+                    cols=s*m-s+1;
+                end
+            end
+        end
+    end
+elseif sourcet==4
+    for k=900:25:1200
+        for n=30:30:120
+            m=m+1;
+            if k==temp
+                if n==time
+                    cols=s*m-s+1;
+                end
+            end
+        end
+    end
 end
 if isempty(cols) ==0
     

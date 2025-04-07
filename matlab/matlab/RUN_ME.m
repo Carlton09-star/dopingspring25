@@ -6,9 +6,6 @@
 %   Tested By:  Ethan Walls, Peter Fields
 %--------------------------------------------------------------------------
 
-
-
-
 clc
 clear variables
 
@@ -20,12 +17,10 @@ user=input('What is your Rose-Hulman username?\n','s');
 path="D:\dopingspring25\data\doping_data.xlsx";
 
 
-s=31;%size of one data entry
-
-
 %
-%   Standard currents
+%   Checks for valid path
 %
+
 try
     readmatrix(path,'Range','A1:A1');
 catch
@@ -34,16 +29,17 @@ catch
     path=input('\nPlease input path\n','s');
 end
 
+
+
+s=31;%size of one data entry
+
+
+%
+%   Standard currents
+%
+
 [stand1,stand2,stand3,stand4,stand5,stand6,stand7,stand8,stand9]=stored();
-clc
-
-
-%
-%   Checks for valid path
-%
-
-
-   
+clc 
  
 
 
@@ -51,9 +47,8 @@ clc
 initial=input('Select one by typing the number next to the option\n1. Enter Data\n2. Edit Standard Voltage Reading\n3. Add new Paramter group\n4. Display graph\n5. Data analysis\n');
 clc
 
-%%
-%                            option 1 input data
-%%
+
+  %%                          option 1 input data
 
 %Choose how many wafers to enter and input backround profiling if it's all
 %the same
@@ -62,23 +57,23 @@ if initial==1
     loopcondense=input('Do they all have the same backround profile?\n1. Yes        2. No\n');
 if loopcondense==1
      [backsheet,subst,bdt]=backroundprofile();
-else
 end
 
 
     for i=1:wafn   %repeats so you can repeatedly put in data
+
     if wafn^2<0
         error(':/ That is an imaginary number my friend')
     end
 %User data storage for the user log
-t = datetime('now');
-t=datestr(t);
+t=datestr(datetime('now'));
+
 file=fopen('user_log.txt','a');
-fprintf(file,'%s        %s      ',user,t);
+fprintf(file,'%s        %s      \n',user,t);
 
         
         %fill in with other types later and expand if statement
-    sourcet=input('What type of source did you use?\n1. GS-245\n2. GS-139\n');   %what type of source did you use put above stuff under this
+    sourcet=input('What type of source did you use?\n1. GS-245\n2. GS-139\n3. TP-250\n4. TP-470\n');   %what type of source did you use put above stuff under this
     if sourcet==1
     source=input('Which source did you use?\n1. G245-1     2. G245-2\n');
     type="boron";
@@ -98,7 +93,7 @@ fprintf(file,'%s        %s      ',user,t);
     %   Pre-dep Profiling
     %   
 
-    temp=input('what temperture did you run pre-dep at in Celsius? (Zone 3)\n');                           %
+    temp=input('What temperture did you run pre-dep at in Celsius? (Zone 3)\n');                           %
     truetemp=input('What temperatures did the furnace stabilize to? [zone1,zone2,zone3]\n');    %   Paramters of pre dep fuck I need to make another if statement for pre dep vs drive in lowkey probably make this all a function and use it like that later problem
     time=input('How long where the wafers in the furnace? (minutes)\n');  
     diffusionl=diffusionlength(temp);
@@ -110,7 +105,7 @@ fprintf(file,'%s        %s      ',user,t);
     stand=input('did you use a standard input current? Do not use if for one of your input currents you did not get a return voltage\n1. yes\n2. no\n'); 
     clc
     if stand==1
-        fprintf('It is assumed you used both the positive and negative currents listed in the options\n')
+        fprintf('It is assumed you used both the positive and negative currents listed in the options.\n (You should have twice as many outputs as there are listed currents)\n')
         fprintf('Which option in Micro amps?\n')
         standprinter()
         choice=input('');
@@ -137,7 +132,7 @@ fprintf(file,'%s        %s      ',user,t);
         %Not a custom input
         
     elseif stand==2
-        in=input('what were your input currents in microamps? [current 1,current 2,...,current n]\nNote If there is no associated output value do not include it\n');
+        in=input('What were your input currents in microamps? [current 1,current 2,...,current n]\nNote If there is no associated output value do not include it\n');
     end
     clc
 
@@ -148,7 +143,8 @@ fprintf(file,'%s        %s      ',user,t);
  
   clc
   fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f\n',sheetresistance,diffusionl)
-  peakconc=input('Please us PV lighthouse and input your N__peak in atoms/cm^3\n');
+  pvlighthouse()
+  peakconc=input('Please use PV lighthouse and input your N__peak in atoms/cm^3\n');
   junctiond=input('please input your junction depth in microns\n');
   
   
@@ -215,18 +211,18 @@ fprintf(file,'%s        %s      ',user,t);
     else 
         end
 
-    temp=input('what temperture did you run pre-dep at in Celsius? (Zone 3)\n');                           %
+    temp=input('What temperture did you run pre-dep at in Celsius? (Zone 3)\n');                           %
     truetemp=input('What temperatures did the furnace stabilize to? [zone1,zone2,zone3]\n');    %   Paramters of pre dep fuck I need to make another if statement for pre dep vs drive in lowkey probably make this all a function and use it like that later problem
     time=input('How long where the wafers in the furnace? (minutes)\n');  
     diffusionl=diffusionlength(temp);
     clc 
 
 
-     stand=input('did you use a standard input current? Do not use if one of your input currents did not return a voltage\n1. yes\n2. no\n'); 
+     stand=input('Did you use a standard input current? Do not use if one of your input currents did not return a voltage\n1. yes\n2. no\n'); 
      clc
 
     if stand==1
-        fprintf('It is assumed you used both the positive and negative currents listed in the options\n')
+        fprintf('It is assumed you used both the positive and negative currents listed in the options.(You should have twice as many outputs as there are listed currents)\n')
         fprintf('Which option in Micro amps?\n')
         standprinter()
         choice=input('');
@@ -253,7 +249,7 @@ fprintf(file,'%s        %s      ',user,t);
         %Not a custom input
         
     elseif stand==2
-        in=input('what were your input currents in microamps? [current 1,current 2,...,current n]\nIf there is no associated output value do not include it');
+        in=input('What were your input currents in microamps? [current 1,current 2,...,current n]\nIf there is no associated output value do not include it');
     end
     clc
 
@@ -264,6 +260,7 @@ fprintf(file,'%s        %s      ',user,t);
  
   clc
   fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f\n',sheetresistance,diffusionl)
+  pvlighthouse()
   peakconc=input('Please us PV lighthouse and input your N__peak in atoms/cm^3\n');
   junctiond=input('please input your junction depth in microns\n');
   
@@ -312,27 +309,271 @@ end
        writematrix(tot,path,'Sheet',sheet,'FileType','spreadsheet','Range',range)
        writecell({backsheet,subst,bdt},path,'Sheet',sheet,'FileType','spreadsheet','Range',range3)
        datastorer(temp,time,sourcet,source,wafernumber,peakconc)
+
+       fprintf(file,'success Wafer number %3f\n, wafer type %3f-%3f for %3f at %3f\n',wafernumber,sourcet,source,time,temp);
+       fclose(file);
+ 
+%%   TP-250
+    elseif sourcet==3
+            
+    source=1;
+    type='Phos';
+   
+    sheet='TP-250';
+    clc
+    %
+    %   Backround profiling
+    %
+
+    if loopcondense==2
+    [backsheet,subst,bdt]=backroundprofile();
+    else 
+    end
+
+
+    %
+    %   Pre-dep Profiling
+    %   
+
+    temp=input('What temperture did you run pre-dep at in Celsius? (Zone 3)\n');                           %
+    truetemp=input('What temperatures did the furnace stabilize to? [zone1,zone2,zone3]\n');    %   Paramters of pre dep fuck I need to make another if statement for pre dep vs drive in lowkey probably make this all a function and use it like that later problem
+    time=input('How long where the wafers in the furnace? (minutes)\n');  
+    diffusionl=diffusionlength(temp);
+    clc 
+    
+
+
+
+    stand=input('Did you use a standard input current? Do not use if for one of your input currents you did not get a return voltage\n1. yes\n2. no\n'); 
+    clc
+    if stand==1
+        fprintf('It is assumed you used both the positive and negative currents listed in the options\n(You should have twice as many outputs as there are listed currents)\n')
+        fprintf('Which option in Micro amps?\n')
+        standprinter()
+        choice=input('');
+        if choice==1
+           in=[stand1*10^(-3),-stand1*10^(-3)];           
+    elseif choice==2
+        in=[stand2*10^(-3),-stand2*10^(-3)];
+    elseif choice==3
+        in=[stand3*10^(-3),-stand3*10^(-3)];
+            elseif choice==4
+        in=[stand4*10^(-3),-stand4*10^(-3)];
+            elseif choice==5
+        in=[stand5*10^(-3),-stand5*10^(-3)];
+            elseif choice==6
+        in=[stand6*10^(-3),-stand6*10^(-3)];
+            elseif choice==7
+        in=[stand7*10^(-3),-stand7*10^(-3)];
+            elseif choice==8
+        in=[stand8*10^(-3),-stand8*10^(-3)];
+            elseif choice==9
+        in=[stand9*10^(-3),-stand9*10^(-3)];
+
+        end
+        %Not a custom input
+        
+    elseif stand==2
+        in=input('What were your input currents in microamps? [current 1,current 2,...,current n]\nNote If there is no associated output value do not include it\n');
+    end
+    clc
+
+    out=input('What was your output voltages in mV? [voltage1, voltage2,...,voltagen]\nEnter these in the same order as your input currents (There should be twice as many)\nNote:If using standard input record all positive current then all negative current voltages\n');
+  sheetresistance=slopes(in,out);
+  in=setsize(in);
+  out=setsize(out);
+ 
+  clc
+  fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f\n',sheetresistance,diffusionl)
+  pvlighthouse()
+  peakconc=input('Please us PV lighthouse and input your N__peak in atoms/cm^3\n');
+  junctiond=input('please input your junction depth in microns\n');
+  
+  
+
+  
+    %Giant data table of where collums start in excel
+    collums=collumfinderb(sourcet,source,temp,time,s);
+
+    if collums==-1
+        collums=extractor(temp,time,source,sourcet);
+        
+    end
+    %If it is still = to -1
+    if collums==-1
+    error(('invalid paramters for source double check entered parameters match what is allowed with source and set as an option in this program.'))
+    end
+
+   %%
+   
+        coll=numtol(collums);
+        coole=numtol(collums+s-1);
+        colr=sprintf('%s:%s',coll,coole);
+       
+       colr3=numtol(collums+s-3);
+    
+
+        filen=readmatrix(path,'sheet',sheet,'range',colr);
+       
+
+
+        filen=compactor(filen,collums);
+        [row,collum]=size(filen);  
+
+        [idx,~]=max(row);
+        wafernumber=idx+1; 
+   
+       
+       idx2=idx+4;
+      %% 
+        tot=[wafernumber,truetemp,in,out,sheetresistance,diffusionl,junctiond,peakconc];
+        tot=zer(tot);
+        range=sprintf('%s%d:%s%d',coll,idx2,coole,idx2);
+      
+        range3=sprintf('%s%d:%s%d',colr3,idx2,coole,idx2);
+        
+  
+      %% 
+       writematrix(tot,path,'Sheet',sheet,'FileType','spreadsheet','Range',range)
+       writecell({backsheet,subst,bdt},path,'Sheet',sheet,'FileType','spreadsheet','Range',range3)
+       datastorer(temp,time,sourcet,source,wafernumber,peakconc)
+%%
+       fprintf(file,'success Wafer number %3f\n, wafer type %3f-%3f for %3f at %3f\n',wafernumber,sourcet,source,time,temp);
+       fclose(file);
+
+    elseif sourcet==4
+        %%   TP-470
+    
+            
+    source=1;
+    type="Phos";
+   
+    sheet='TP-470';
+    clc
+    %
+    %   Backround profiling
+    %
+    if loopcondense==2
+    [backsheet,subst,bdt]=backroundprofile();
+    else 
+    end
+
+
+    %
+    %   Pre-dep Profiling
+    %   
+
+    temp=input('What temperture did you run pre-dep at in Celsius? (Zone 3)\n');                           %
+    truetemp=input('What temperatures did the furnace stabilize to? [zone1,zone2,zone3]\n');    %   Paramters of pre dep fuck I need to make another if statement for pre dep vs drive in lowkey probably make this all a function and use it like that later problem
+    time=input('How long where the wafers in the furnace? (minutes)\n');  
+    diffusionl=diffusionlength(temp);
+    clc 
+    
+
+
+
+    stand=input('Did you use a standard input current? Do not use if for one of your input currents you did not get a return voltage\n1. yes\n2. no\n'); 
+    clc
+    if stand==1
+        fprintf('It is assumed you used both the positive and negative currents listed in the options\n(You should have twice as many outputs as there are listed currents)\n')
+        fprintf('Which option in Micro amps?\n')
+        standprinter()
+        choice=input('');
+        if choice==1
+           in=[stand1*10^(-3),-stand1*10^(-3)];           
+    elseif choice==2
+        in=[stand2*10^(-3),-stand2*10^(-3)];
+    elseif choice==3
+        in=[stand3*10^(-3),-stand3*10^(-3)];
+            elseif choice==4
+        in=[stand4*10^(-3),-stand4*10^(-3)];
+            elseif choice==5
+        in=[stand5*10^(-3),-stand5*10^(-3)];
+            elseif choice==6
+        in=[stand6*10^(-3),-stand6*10^(-3)];
+            elseif choice==7
+        in=[stand7*10^(-3),-stand7*10^(-3)];
+            elseif choice==8
+        in=[stand8*10^(-3),-stand8*10^(-3)];
+            elseif choice==9
+        in=[stand9*10^(-3),-stand9*10^(-3)];
+
+        end
+        %Not a custom input
+        
+    elseif stand==2
+        in=input('What were your input currents in microamps? [current 1,current 2,...,current n]\nNote If there is no associated output value do not include it\n');
+    end
+    clc
+
+    out=input('What was your output voltages in mV? [voltage1, voltage2,...,voltagen]\nEnter these in the same order as your input currents (There should be twice as many)\nNote:If using standard input record all positive current then all negative current voltages\n');
+  sheetresistance=slopes(in,out);
+  in=setsize(in);
+  out=setsize(out);
+ 
+  clc
+  fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f\n',sheetresistance,diffusionl)
+  pvlighthouse()
+  peakconc=input('Please us PV lighthouse and input your N__peak in atoms/cm^3\n');
+  junctiond=input('please input your junction depth in microns\n');
+  
+  
+
+  %%
+    %Giant data table of where collums start in excel
+    collums=collumfinderb(sourcet,source,temp,time,s);
+
+    if collums==-1
+        collums=extractor(temp,time,source,sourcet);
+        
+    end
+    %If it is still = to -1
+    if collums==-1
+    error(('invalid paramters for source double check entered parameters match what is allowed with source and set as an option in this program.'))
+    end
+   %%
+   
+        coll=numtol(collums);
+        coole=numtol(collums+s-1);
+        colr=sprintf('%s:%s',coll,coole);
+       
+       colr3=numtol(collums+s-3);
+    
+
+        filen=readmatrix(path,'sheet',sheet,'range',colr);
+       
+
+
+        filen=compactor(filen,collums);
+        [row,collum]=size(filen);  
+
+        [idx,~]=max(row);
+        wafernumber=idx+1; 
+   
+       
+       idx2=idx+4;
+      %% 
+        tot=[wafernumber,truetemp,in,out,sheetresistance,diffusionl,junctiond,peakconc];
+        tot=zer(tot);
+        range=sprintf('%s%d:%s%d',coll,idx2,coole,idx2);
+      
+        range3=sprintf('%s%d:%s%d',colr3,idx2,coole,idx2);
+        
+  
+      %% 
+       writematrix(tot,path,'Sheet',sheet,'FileType','spreadsheet','Range',range)
+       writecell({backsheet,subst,bdt},path,'Sheet',sheet,'FileType','spreadsheet','Range',range3)
+       datastorer(temp,time,sourcet,source,wafernumber,peakconc)
 %%
        fprintf(file,'success Wafer number %3f\n, wafer type %3f-%3f for %3f at %3f\n',wafernumber,sourcet,source,time,temp);
        fclose(file);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
     end
 
 
     end
+    %%                                  Option 2
 elseif initial==2
 
       fprintf('Which standard input do you wish to change?\n1. %1d,%1d,%1d       2. %1d,%1d,%1d       3. %1d,%1d,%1d\n4. %1d,%1d,%1d       5.%1d,%1d,%1d       6. %1d,%1d,%1d\n7. %1d,%1d,%1d       8. %1d,%1d,%1d      9. %1d,%1d,%1d\nAll in microamps\n',stand1,stand2,stand3,stand4,stand5,stand6,stand7,stand8,stand9);
@@ -342,33 +583,36 @@ elseif initial==2
          standeditor(stande,v);
          clc
          [stand1,stand2,stand3,stand4,stand5,stand6,stand7,stand8,stand9]=stored();
-         fprintf('stand %d has been changed\n',stande)
+         fprintf('Stand %d has been changed\n',stande)
            fprintf('New Standard Inputs\n')
            standprinter()
+%%                                         Option 3
 elseif initial==3
     temp=input('what new input temperture do you want to add (Celcius)?\n');
     time=input('what time do you wish to add (minutes)?\n');
-    sourcet=input('What type of source did you use?\n1. GS-245\n2. GS-139\n');
+    sourcet=input('What type of source did you use?\n1. GS-245\n2. GS-139\n\3. TP-250\n4. TP-470');
     source=input('Which source are you using? (Use 1 if there is only one of that source).\n');
   
     clc
-    %%
+   
     updater(temp,time,source,sourcet,path)
-    %%
+   
     fprintf('New Paramter Added\n')
 
-
+%%                                        Option 4
 
 elseif initial==4
-    temp=input('what temperture did you run pre-dep at in Celsius? (Zone 3)\n');  
+    temp=input('What temperture did you run pre-dep at in Celsius? (Zone 3)\n');  
     time=input('How long where the wafers in the furnace? (minutes)\n'); 
     sourcet=input('What type of source did you use?\n1. GS-245\n2. GS-139\n');
     if sourcet==1
-        source=input('Which source did you use?\n1. GS-245-1     2. GS-245-2\n');
+        source=input('Which source did you use?\n1. GS-245-1     2. GS-245-2\n3. TP-250         4. TP-470');
     else
         source=1;
     end
     graphplotter(temp,time,sourcet,source)
+
+    %%                                      Option 5
 elseif initial==5
     temp=input('What was the temperture of the relevant data in Celcius? (Zone 3)\n');
     time=input('How long were they in the furnace for (minutes)?\n');
@@ -383,8 +627,6 @@ elseif initial==5
     elseif sourcet==2
         source=1;
 
-
-        
     %Grabs the correct section of data 
     end
     collums=collumfinderb(sourcet,source,temp,time,s);
@@ -443,12 +685,10 @@ elseif initial==5
     writematrix(D,file,'Range','B2:D4')
 
     fprintf('       MEAN       Standard deviation      Standard error\njunction depth       %d      %d      %d\nPeak concentration      %d      %d      %d\nSheet Resistance        %d      %d      %d',agjunc,stdjunc,stejunc,avgpeak,stdpeak,stepeak,avgsheet,stdsheet,stesheet);
-     
+     end
 
-
-
-
-end
-
-
+   restart=input('Do you wish to run again?\n1. Yes         2. No');
+   if restart==1
+     RUN_ME
+   end
 
