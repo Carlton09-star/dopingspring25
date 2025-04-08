@@ -35,7 +35,10 @@ filePath = 'D:\dopingspring25\data.json';
 % Write the JSON string to the file
 fid = fopen(filePath, 'w');
 if fid == -1
-    error('Cannot create JSON file');
+    warning('Cannot find JSON file please input path');
+    path=input('');
+    fid=fopen(path,'w');
 end
+
 fwrite(fid, jsonText, 'char');
 fclose(fid);

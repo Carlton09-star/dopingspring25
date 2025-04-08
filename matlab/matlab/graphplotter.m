@@ -5,7 +5,8 @@ name1=part1+name;
 try 
     readmatrix(name1)
 catch
-    error('No data for Parameters exists')
+    warning('Bad path to file please input the path to the data you are looking for')
+    name1=input('');
 end
 
 data=readmatrix(name1);

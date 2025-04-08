@@ -102,7 +102,7 @@ fprintf(file,'%s        %s      \n',user,t);
 
 
 
-    stand=input('did you use a standard input current? Do not use if for one of your input currents you did not get a return voltage\n1. yes\n2. no\n'); 
+    stand=input('did you use a standard input current? \nDo not use if for one of your input currents you did not get a return voltage\n1. yes\n2. no\n'); 
     clc
     if stand==1
         fprintf('It is assumed you used both the positive and negative currents listed in the options.\n (You should have twice as many outputs as there are listed currents)\n')
@@ -218,7 +218,7 @@ fprintf(file,'%s        %s      \n',user,t);
     clc 
 
 
-     stand=input('Did you use a standard input current? Do not use if one of your input currents did not return a voltage\n1. yes\n2. no\n'); 
+     stand=input('Did you use a standard input current? \nDo not use if one of your input currents did not return a voltage\n1. yes\n2. no\n'); 
      clc
 
     if stand==1
@@ -344,7 +344,7 @@ end
 
 
 
-    stand=input('Did you use a standard input current? Do not use if for one of your input currents you did not get a return voltage\n1. yes\n2. no\n'); 
+    stand=input('Did you use a standard input current?\n Do not use if for one of your input currents you did not get a return voltage\n1. yes\n2. no\n'); 
     clc
     if stand==1
         fprintf('It is assumed you used both the positive and negative currents listed in the options\n(You should have twice as many outputs as there are listed currents)\n')
@@ -472,7 +472,7 @@ end
 
 
 
-    stand=input('Did you use a standard input current? Do not use if for one of your input currents you did not get a return voltage\n1. yes\n2. no\n'); 
+    stand=input('Did you use a standard input current? \nDo not use if for one of your input currents you did not get a return voltage\n1. yes\n2. no\n'); 
     clc
     if stand==1
         fprintf('It is assumed you used both the positive and negative currents listed in the options\n(You should have twice as many outputs as there are listed currents)\n')
@@ -623,8 +623,8 @@ elseif initial==5
         sheet='GS-139';
     end
     if sourcet==1
-        source=input('Which source did you use?\n1. G245-1     2. G245-2\n');
-    elseif sourcet==2
+        source=input('Which source did you use?\n1. G245-1     2. G245-2\n3. TP-250     4. TP-470\n');
+    elseif (sourcet==2) || (sourcet==3) || (sourcet==4)
         source=1;
 
     %Grabs the correct section of data 
@@ -644,9 +644,16 @@ elseif initial==5
     try
         readmatrix(path,'sheet',sheet,'range',colr);
     catch
-        error('No such data exists');
+        warning('No such data exists or invalid path');
+        path=input('please input a valid path\n');
     end
-
+    
+    try 
+        readmatrix(path,'sheet',sheet,'range',colr);
+    catch
+        error('No such data exists')
+    end
+    
     filen=readmatrix(path,'sheet',sheet,'range',colr);
     tables(temp,time,source,sourcet,filen)
     wafn=max(filen(:,1));    
@@ -683,11 +690,11 @@ elseif initial==5
     C=[avgsheet;stdsheet;stesheet];
     D=[A,B,C];
     writematrix(D,file,'Range','B2:D4')
-
-    fprintf('       MEAN       Standard deviation      Standard error\njunction depth       %d      %d      %d\nPeak concentration      %d      %d      %d\nSheet Resistance        %d      %d      %d',agjunc,stdjunc,stejunc,avgpeak,stdpeak,stepeak,avgsheet,stdsheet,stesheet);
+%%   
+    fprintf('                           MEAN               Standard deviation      Standard error\njunction depth              %d            %d                           %d\nPeak concentration          %d            %d                            %d\nSheet Resistance            %d            %d                          %d\n',agjunc,stdjunc,stejunc,avgpeak,stdpeak,stepeak,avgsheet,stdsheet,stesheet);
      end
-
-   restart=input('Do you wish to run again?\n1. Yes         2. No');
+%%
+   restart=input('Do you wish to run again?\n1. Yes         2. No\n');
    if restart==1
      RUN_ME
    end
