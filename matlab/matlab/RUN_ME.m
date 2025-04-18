@@ -77,7 +77,7 @@ fprintf(file,'%s        %s      \n',user,t);
     if sourcet==1
     source=input('Which source did you use?\n1. G245-1     2. G245-2\n');
     type="boron";
-   
+   s=32;
     sheet='GS-245';
     clc
     %
@@ -95,12 +95,16 @@ fprintf(file,'%s        %s      \n',user,t);
 
     temp=input('What temperture did you run pre-dep at in Celsius? (Zone 3)\n');                           %
     truetemp=input('What temperatures did the furnace stabilize to? [zone1,zone2,zone3]\n');    %   Paramters of pre dep fuck I need to make another if statement for pre dep vs drive in lowkey probably make this all a function and use it like that later problem
-    time=input('How long where the wafers in the furnace? (minutes)\n');  
+    time=input('How long where the wafers in the furnace? (minutes)\n');
+    anneal=input('How long was your anneal after pre dep?(minutes)\n');
     diffusionl=diffusionlength(temp);
     clc 
     
 
 
+    loc=input('How many locations did you take? Use the same input currents at all locations.\n');
+    clc
+    
 
     stand=input('did you use a standard input current? \nDo not use if for one of your input currents you did not get a return voltage\n1. yes\n2. no\n'); 
     clc
@@ -135,15 +139,24 @@ fprintf(file,'%s        %s      \n',user,t);
         in=input('What were your input currents in microamps? [current 1,current 2,...,current n]\nNote If there is no associated output value do not include it\n');
     end
     clc
-
+for l=1:loc
+    fprintf('for location %f',l);
     out=input('What was your output voltages in mV? [voltage1, voltage2,...,voltagen]\nEnter these in the same order as your input currents (There should be twice as many)\nNote:If using standard input record all positive current then all negative current voltages\n');
-  sheetresistance=slopes(in,out);
+    clc
+  sheetresistance1(l)=slopes(in,out);
+  sheetresistance=mean(sheetresistance1);
+
+end
   in=setsize(in);
   out=setsize(out);
  
   clc
   fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f\n',sheetresistance,diffusionl)
+  fprintf('Next using PV Lighthouse find your peak concentration and junction depth')
+  pause(5)
   pvlighthouse()
+  clc
+  fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f\n',sheetresistance,diffusionl)
   peakconc=input('Please use PV lighthouse and input your N__peak in atoms/cm^3\n');
   junctiond=input('please input your junction depth in microns\n');
   
@@ -183,7 +196,7 @@ fprintf(file,'%s        %s      \n',user,t);
        
        idx2=idx+4;
       %% 
-        tot=[wafernumber,truetemp,in,out,sheetresistance,diffusionl,junctiond,peakconc];
+        tot=[wafernumber,truetemp,in,out,sheetresistance,diffusionl,junctiond,peakconc,anneal];
         tot=zer(tot);
         range=sprintf('%s%d:%s%d',coll,idx2,coole,idx2);
       
@@ -203,6 +216,7 @@ fprintf(file,'%s        %s      \n',user,t);
        %compressed into not this mess.
     elseif sourcet==2 
         source=1;
+        s=32;
         clc
     type='boron';
     sheet='GS-139';
@@ -214,12 +228,18 @@ fprintf(file,'%s        %s      \n',user,t);
     temp=input('What temperture did you run pre-dep at in Celsius? (Zone 3)\n');                           %
     truetemp=input('What temperatures did the furnace stabilize to? [zone1,zone2,zone3]\n');    %   Paramters of pre dep fuck I need to make another if statement for pre dep vs drive in lowkey probably make this all a function and use it like that later problem
     time=input('How long where the wafers in the furnace? (minutes)\n');  
+    anneal=input('How long was your anneal after pre dep? (minutes)\n');
     diffusionl=diffusionlength(temp);
     clc 
 
 
      stand=input('Did you use a standard input current? \nDo not use if one of your input currents did not return a voltage\n1. yes\n2. no\n'); 
      clc
+
+
+     loc=input('How many locations did you take? Use the same input currents at all locations.\n');
+    clc
+
 
     if stand==1
         fprintf('It is assumed you used both the positive and negative currents listed in the options.(You should have twice as many outputs as there are listed currents)\n')
@@ -252,17 +272,28 @@ fprintf(file,'%s        %s      \n',user,t);
         in=input('What were your input currents in microamps? [current 1,current 2,...,current n]\nIf there is no associated output value do not include it');
     end
     clc
-
+for l=1:loc
+    fprintf('for location %f',l);
     out=input('What was your output voltages in mV? [voltage1, voltage2,...,voltagen]\nEnter these in the same order as your input currents (There should be twice as many)\nNote:If using standard input record all positive current then all negative current voltages\n');
-  sheetresistance=slopes(in,out);
+    clc
+   sheetresistance1(l)=slopes(in,out);
+  sheetresistance=mean(sheetresistance1);
+
+end
+    
   in=setsize(in);
   out=setsize(out);
  
   clc
-  fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f\n',sheetresistance,diffusionl)
+fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f\n',sheetresistance,diffusionl)
+  fprintf('Next using PV Lighthouse find your peak concentration and junction depth')
+  pause(5)
   pvlighthouse()
-  peakconc=input('Please us PV lighthouse and input your N__peak in atoms/cm^3\n');
+  clc
+  fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f\n',sheetresistance,diffusionl)
+  peakconc=input('Please use PV lighthouse and input your N__peak in atoms/cm^3\n');
   junctiond=input('please input your junction depth in microns\n');
+  
   
   
 
@@ -298,7 +329,7 @@ end
        
        idx2=idx+4;
      
-        tot=[wafernumber,truetemp,in,out,sheetresistance,diffusionl,junctiond,peakconc];
+        tot=[wafernumber,truetemp,in,out,sheetresistance,diffusionl,junctiond,peakconc,anneal];
         tot=zer(tot);
         range=sprintf('%s%d:%s%d',coll,idx2,coole,idx2);
       
@@ -346,6 +377,11 @@ end
 
     stand=input('Did you use a standard input current?\n Do not use if for one of your input currents you did not get a return voltage\n1. yes\n2. no\n'); 
     clc
+
+    loc=input('How many locations did you take? Use the same input currents at all locations.\n');
+    clc
+
+
     if stand==1
         fprintf('It is assumed you used both the positive and negative currents listed in the options\n(You should have twice as many outputs as there are listed currents)\n')
         fprintf('Which option in Micro amps?\n')
@@ -378,16 +414,29 @@ end
     end
     clc
 
+    for l=1:loc
+        fprintf('for location %f',l);
     out=input('What was your output voltages in mV? [voltage1, voltage2,...,voltagen]\nEnter these in the same order as your input currents (There should be twice as many)\nNote:If using standard input record all positive current then all negative current voltages\n');
-  sheetresistance=slopes(in,out);
+    clc
+    
+  sheetresistance1(l)=slopes(in,out);
+  sheetresistance=mean(sheetresistance1);
+
+end
+    
   in=setsize(in);
   out=setsize(out);
  
   clc
-  fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f\n',sheetresistance,diffusionl)
+fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f\n',sheetresistance,diffusionl)
+  fprintf('Next using PV Lighthouse find your peak concentration and junction depth')
+  pause(5)
   pvlighthouse()
-  peakconc=input('Please us PV lighthouse and input your N__peak in atoms/cm^3\n');
+  clc
+  fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f\n',sheetresistance,diffusionl)
+  peakconc=input('Please use PV lighthouse and input your N__peak in atoms/cm^3\n');
   junctiond=input('please input your junction depth in microns\n');
+  
   
   
 
@@ -474,6 +523,11 @@ end
 
     stand=input('Did you use a standard input current? \nDo not use if for one of your input currents you did not get a return voltage\n1. yes\n2. no\n'); 
     clc
+
+    loc=input('How many locations did you take? Use the same input currents at all locations.\n');
+    clc
+
+
     if stand==1
         fprintf('It is assumed you used both the positive and negative currents listed in the options\n(You should have twice as many outputs as there are listed currents)\n')
         fprintf('Which option in Micro amps?\n')
@@ -505,17 +559,29 @@ end
         in=input('What were your input currents in microamps? [current 1,current 2,...,current n]\nNote If there is no associated output value do not include it\n');
     end
     clc
-
+for l=1:loc
+    fprintf('for location %f',l);
     out=input('What was your output voltages in mV? [voltage1, voltage2,...,voltagen]\nEnter these in the same order as your input currents (There should be twice as many)\nNote:If using standard input record all positive current then all negative current voltages\n');
-  sheetresistance=slopes(in,out);
+    clc
+    
+  sheetresistance1(l)=slopes(in,out);
+  sheetresistance=mean(sheetresistance1);
+
+end
+    
   in=setsize(in);
   out=setsize(out);
  
   clc
-  fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f\n',sheetresistance,diffusionl)
+fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f\n',sheetresistance,diffusionl)
+  fprintf('Next using PV Lighthouse find your peak concentration and junction depth')
+  pause(5)
   pvlighthouse()
-  peakconc=input('Please us PV lighthouse and input your N__peak in atoms/cm^3\n');
+  clc
+  fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f\n',sheetresistance,diffusionl)
+  peakconc=input('Please use PV lighthouse and input your N__peak in atoms/cm^3\n');
   junctiond=input('please input your junction depth in microns\n');
+  
   
   
 
@@ -695,6 +761,7 @@ elseif initial==5
      end
 %%
    restart=input('Do you wish to run again?\n1. Yes         2. No\n');
+   clc
    if restart==1
      RUN_ME
    end

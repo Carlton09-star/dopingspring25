@@ -3,7 +3,7 @@ m=0;        %Might be fixed but we'll see
 cols=[];
 if sourcet==1
     for j=1:2
-        for k=1050:25:1125
+        for k=900:25:1175
             for n=30:30:120
                 m=m+1;
                     if j==source
