@@ -31,7 +31,10 @@ end
 
 
 
-s=31;%size of one data entry
+s=31;
+%size of one data entry for phosphorus 
+%I later realized this needs to be changed in the boron information so I
+%redefined it in the relevant sections
 
 
 %
@@ -48,7 +51,7 @@ initial=input('Select one by typing the number next to the option\n1. Enter Data
 clc
 
 
-  %%                          option 1 input data
+                         option 1 input data
 
 %Choose how many wafers to enter and input backround profiling if it's all
 %the same
@@ -72,17 +75,22 @@ file=fopen('user_log.txt','a');
 fprintf(file,'%s        %s      \n',user,t);
 
         
-        %fill in with other types later and expand if statement
-    sourcet=input('What type of source did you use?\n1. GS-245\n2. GS-139\n3. TP-250\n4. TP-470\n');   %what type of source did you use put above stuff under this
+       %what type of source did you use put above stuff under this
+    sourcet=input('What type of source did you use?\n1. GS-245\n2. GS-139\n3. TP-250\n4. TP-470\n');   
+
     if sourcet==1
+
     source=input('Which source did you use?\n1. G245-1     2. G245-2\n');
     type="boron";
    s=32;
     sheet='GS-245';
     clc
+
     %
     %   Backround profiling
     %
+
+
     if loopcondense==2
     [backsheet,subst,bdt]=backroundprofile();
     else 
@@ -99,12 +107,15 @@ fprintf(file,'%s        %s      \n',user,t);
     anneal=input('How long was your anneal after pre dep?(minutes)\n');
     diffusionl=diffusionlength(temp);
     clc 
-    
+   
 
-
+    %Determines the size of a for loop later
     loc=input('How many locations did you take? Use the same input currents at all locations.\n');
     clc
     
+    %
+    %   Input and output currents 
+    %
 
     stand=input('did you use a standard input current? \nDo not use if for one of your input currents you did not get a return voltage\n1. yes\n2. no\n'); 
     clc
@@ -143,6 +154,7 @@ for l=1:loc
     fprintf('for location %f',l);
     out=input('What was your output voltages in mV? [voltage1, voltage2,...,voltagen]\nEnter these in the same order as your input currents (There should be twice as many)\nNote:If using standard input record all positive current then all negative current voltages\n');
     clc
+  totalstore(temp,time,source,sourcet,wafern,out)
   sheetresistance1(l)=slopes(in,out);
   sheetresistance=mean(sheetresistance1);
 
@@ -276,6 +288,8 @@ for l=1:loc
     fprintf('for location %f',l);
     out=input('What was your output voltages in mV? [voltage1, voltage2,...,voltagen]\nEnter these in the same order as your input currents (There should be twice as many)\nNote:If using standard input record all positive current then all negative current voltages\n');
     clc
+
+    totalstore(temp,time,source,sourcet,wafern,out)
    sheetresistance1(l)=slopes(in,out);
   sheetresistance=mean(sheetresistance1);
 
@@ -419,6 +433,7 @@ end
     out=input('What was your output voltages in mV? [voltage1, voltage2,...,voltagen]\nEnter these in the same order as your input currents (There should be twice as many)\nNote:If using standard input record all positive current then all negative current voltages\n');
     clc
     
+    totalstore(temp,time,source,sourcet,wafern,out)
   sheetresistance1(l)=slopes(in,out);
   sheetresistance=mean(sheetresistance1);
 
@@ -564,6 +579,7 @@ for l=1:loc
     out=input('What was your output voltages in mV? [voltage1, voltage2,...,voltagen]\nEnter these in the same order as your input currents (There should be twice as many)\nNote:If using standard input record all positive current then all negative current voltages\n');
     clc
     
+    totalstore(temp,time,source,sourcet,wafern,out)
   sheetresistance1(l)=slopes(in,out);
   sheetresistance=mean(sheetresistance1);
 
@@ -758,7 +774,7 @@ elseif initial==5
     writematrix(D,file,'Range','B2:D4')
 %%   
     fprintf('                           MEAN               Standard deviation      Standard error\njunction depth              %d            %d                           %d\nPeak concentration          %d            %d                            %d\nSheet Resistance            %d            %d                          %d\n',agjunc,stdjunc,stejunc,avgpeak,stdpeak,stepeak,avgsheet,stdsheet,stesheet);
-     end
+end
 %%
    restart=input('Do you wish to run again?\n1. Yes         2. No\n');
    clc
