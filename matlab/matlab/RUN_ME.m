@@ -80,7 +80,7 @@ fprintf(file,'%s        %s      \n',user,t);
 
     if sourcet==1
 
-    source=input('Which source did you use?\n1. G245-1     2. G245-2\n');
+    source=input('Which source did you use?\n1. GS245-1     2. G245-2\n');
     type="boron";
    s=32;
     sheet='GS-245';
