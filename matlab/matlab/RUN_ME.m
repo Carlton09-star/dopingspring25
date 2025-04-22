@@ -51,7 +51,7 @@ initial=input('Select one by typing the number next to the option\n1. Enter Data
 clc
 
 
-                         option 1 input data
+%%                         option 1 input data
 
 %Choose how many wafers to enter and input backround profiling if it's all
 %the same
@@ -108,7 +108,36 @@ fprintf(file,'%s        %s      \n',user,t);
     diffusionl=diffusionlength(temp);
     clc 
    
+  %%
+    %Giant data table of where collums start in excel
+    collums=collumfinderb(sourcet,source,temp,time,s);
 
+    if collums==-1
+        collums=extractor(temp,time,source,sourcet);
+        
+    end
+    %If it is still = to -1
+    if collums==-1
+    error(('invalid paramters for source double check entered parameters match what is allowed with source and set as an option in this program.'))
+    end
+   %%
+   
+        coll=numtol(collums);
+        coole=numtol(collums+s-1);
+        colr=sprintf('%s:%s',coll,coole);
+       
+       colr3=numtol(collums+s-3);
+    
+
+        filen=readmatrix(path,'sheet',sheet,'range',colr);
+       
+
+
+        filen=compactor(filen,collums);
+        [row,collum]=size(filen);  
+
+        [idx,~]=max(row);
+        wafernumber=idx+1; 
     %Determines the size of a for loop later
     loc=input('How many locations did you take? Use the same input currents at all locations.\n');
     clc
@@ -174,36 +203,7 @@ end
   
   
 
-  %%
-    %Giant data table of where collums start in excel
-    collums=collumfinderb(sourcet,source,temp,time,s);
 
-    if collums==-1
-        collums=extractor(temp,time,source,sourcet);
-        
-    end
-    %If it is still = to -1
-    if collums==-1
-    error(('invalid paramters for source double check entered parameters match what is allowed with source and set as an option in this program.'))
-    end
-   %%
-   
-        coll=numtol(collums);
-        coole=numtol(collums+s-1);
-        colr=sprintf('%s:%s',coll,coole);
-       
-       colr3=numtol(collums+s-3);
-    
-
-        filen=readmatrix(path,'sheet',sheet,'range',colr);
-       
-
-
-        filen=compactor(filen,collums);
-        [row,collum]=size(filen);  
-
-        [idx,~]=max(row);
-        wafernumber=idx+1; 
    
        
        idx2=idx+4;
@@ -243,7 +243,33 @@ end
     anneal=input('How long was your anneal after pre dep? (minutes)\n');
     diffusionl=diffusionlength(temp);
     clc 
+    %Edit this so that it works for gs-245
+    collums=collumfinderb(sourcet,source,temp,time,s);
+    if collums==-1
+        collums=extractor(temp,time,source,sourcet);
+    end
 
+if collums==-1
+    error(('invalid paramters for source double check entered parameters match what is allowed with source and set as an option in this program.'))
+end
+ 
+   
+        coll=numtol(collums);
+        coole=numtol(collums+s-1);
+        colr=sprintf('%s:%s',coll,coole);
+       
+       colr3=numtol(collums+s-3);
+       
+        
+        filen=readmatrix(path,'sheet',sheet,'range',colr);
+       
+
+
+        filen=compactor(filen,collums);
+        [row,collum]=size(filen);  
+
+        [idx,~]=max(row);
+        wafernumber=idx+1; 
 
      stand=input('Did you use a standard input current? \nDo not use if one of your input currents did not return a voltage\n1. yes\n2. no\n'); 
      clc
@@ -312,33 +338,7 @@ fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f
   
 
   
-    %Edit this so that it works for gs-245
-    collums=collumfinderb(sourcet,source,temp,time,s);
-    if collums==-1
-        collums=extractor(temp,time,source,sourcet);
-    end
 
-if collums==-1
-    error(('invalid paramters for source double check entered parameters match what is allowed with source and set as an option in this program.'))
-end
- 
-   
-        coll=numtol(collums);
-        coole=numtol(collums+s-1);
-        colr=sprintf('%s:%s',coll,coole);
-       
-       colr3=numtol(collums+s-3);
-       
-        
-        filen=readmatrix(path,'sheet',sheet,'range',colr);
-       
-
-
-        filen=compactor(filen,collums);
-        [row,collum]=size(filen);  
-
-        [idx,~]=max(row);
-        wafernumber=idx+1; 
    
        
        idx2=idx+4;
@@ -386,7 +386,36 @@ end
     diffusionl=diffusionlength(temp);
     clc 
     
+    %Giant data table of where collums start in excel
+    collums=collumfinderb(sourcet,source,temp,time,s);
 
+    if collums==-1
+        collums=extractor(temp,time,source,sourcet);
+        
+    end
+    %If it is still = to -1
+    if collums==-1
+    error(('invalid paramters for source double check entered parameters match what is allowed with source and set as an option in this program.'))
+    end
+
+   %%
+   
+        coll=numtol(collums);
+        coole=numtol(collums+s-1);
+        colr=sprintf('%s:%s',coll,coole);
+       
+       colr3=numtol(collums+s-3);
+    
+
+        filen=readmatrix(path,'sheet',sheet,'range',colr);
+       
+
+
+        filen=compactor(filen,collums);
+        [row,collum]=size(filen);  
+
+        [idx,~]=max(row);
+        wafernumber=idx+1; 
 
 
     stand=input('Did you use a standard input current?\n Do not use if for one of your input currents you did not get a return voltage\n1. yes\n2. no\n'); 
@@ -456,36 +485,7 @@ fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f
   
 
   
-    %Giant data table of where collums start in excel
-    collums=collumfinderb(sourcet,source,temp,time,s);
 
-    if collums==-1
-        collums=extractor(temp,time,source,sourcet);
-        
-    end
-    %If it is still = to -1
-    if collums==-1
-    error(('invalid paramters for source double check entered parameters match what is allowed with source and set as an option in this program.'))
-    end
-
-   %%
-   
-        coll=numtol(collums);
-        coole=numtol(collums+s-1);
-        colr=sprintf('%s:%s',coll,coole);
-       
-       colr3=numtol(collums+s-3);
-    
-
-        filen=readmatrix(path,'sheet',sheet,'range',colr);
-       
-
-
-        filen=compactor(filen,collums);
-        [row,collum]=size(filen);  
-
-        [idx,~]=max(row);
-        wafernumber=idx+1; 
    
        
        idx2=idx+4;
@@ -533,7 +533,36 @@ fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f
     diffusionl=diffusionlength(temp);
     clc 
     
+ %%
+    %Giant data table of where collums start in excel
+    collums=collumfinderb(sourcet,source,temp,time,s);
 
+    if collums==-1
+        collums=extractor(temp,time,source,sourcet);
+        
+    end
+    %If it is still = to -1
+    if collums==-1
+    error(('invalid paramters for source double check entered parameters match what is allowed with source and set as an option in this program.'))
+    end
+   %%
+   
+        coll=numtol(collums);
+        coole=numtol(collums+s-1);
+        colr=sprintf('%s:%s',coll,coole);
+       
+       colr3=numtol(collums+s-3);
+    
+
+        filen=readmatrix(path,'sheet',sheet,'range',colr);
+       
+
+
+        filen=compactor(filen,collums);
+        [row,collum]=size(filen);  
+
+        [idx,~]=max(row);
+        wafernumber=idx+1; 
 
 
     stand=input('Did you use a standard input current? \nDo not use if for one of your input currents you did not get a return voltage\n1. yes\n2. no\n'); 
@@ -601,36 +630,7 @@ fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f
   
   
 
-  %%
-    %Giant data table of where collums start in excel
-    collums=collumfinderb(sourcet,source,temp,time,s);
-
-    if collums==-1
-        collums=extractor(temp,time,source,sourcet);
-        
-    end
-    %If it is still = to -1
-    if collums==-1
-    error(('invalid paramters for source double check entered parameters match what is allowed with source and set as an option in this program.'))
-    end
-   %%
-   
-        coll=numtol(collums);
-        coole=numtol(collums+s-1);
-        colr=sprintf('%s:%s',coll,coole);
-       
-       colr3=numtol(collums+s-3);
-    
-
-        filen=readmatrix(path,'sheet',sheet,'range',colr);
-       
-
-
-        filen=compactor(filen,collums);
-        [row,collum]=size(filen);  
-
-        [idx,~]=max(row);
-        wafernumber=idx+1; 
+ 
    
        
        idx2=idx+4;
