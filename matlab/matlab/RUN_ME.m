@@ -105,7 +105,7 @@ fprintf(file,'%s        %s      \n',user,t);
     truetemp=input('What temperatures did the furnace stabilize to? [zone1,zone2,zone3]\n');    %   Paramters of pre dep fuck I need to make another if statement for pre dep vs drive in lowkey probably make this all a function and use it like that later problem
     time=input('How long where the wafers in the furnace? (minutes)\n');
     anneal=input('How long was your anneal after pre dep?(minutes)\n');
-    diffusionl=diffusionlength(temp);
+    diffusionl=diffusionlength(temp,time);
     clc 
    
   %%
@@ -183,7 +183,7 @@ for l=1:loc
     fprintf('for location %f',l);
     out=input('What was your output voltages in mV? [voltage1, voltage2,...,voltagen]\nEnter these in the same order as your input currents (There should be twice as many)\nNote:If using standard input record all positive current then all negative current voltages\n');
     clc
-  totalstore(temp,time,source,sourcet,wafern,out)
+  totalstore(temp,time,source,sourcet,wafernumber,out)
   sheetresistance1(l)=slopes(in,out);
   sheetresistance=mean(sheetresistance1);
 
@@ -241,7 +241,7 @@ end
     truetemp=input('What temperatures did the furnace stabilize to? [zone1,zone2,zone3]\n');    %   Paramters of pre dep fuck I need to make another if statement for pre dep vs drive in lowkey probably make this all a function and use it like that later problem
     time=input('How long where the wafers in the furnace? (minutes)\n');  
     anneal=input('How long was your anneal after pre dep? (minutes)\n');
-    diffusionl=diffusionlength(temp);
+    diffusionl=diffusionlength(temp,time);
     clc 
     %Edit this so that it works for gs-245
     collums=collumfinderb(sourcet,source,temp,time,s);
@@ -307,15 +307,16 @@ end
         %Not a custom input
         
     elseif stand==2
-        in=input('What were your input currents in microamps? [current 1,current 2,...,current n]\nIf there is no associated output value do not include it');
+        in=input('What were your input currents in microamps? [current 1,current 2,...,current n]\nIf there is no associated output value do not include it\n');
     end
     clc
 for l=1:loc
+    clc
     fprintf('for location %f',l);
     out=input('What was your output voltages in mV? [voltage1, voltage2,...,voltagen]\nEnter these in the same order as your input currents (There should be twice as many)\nNote:If using standard input record all positive current then all negative current voltages\n');
     clc
 
-    totalstore(temp,time,source,sourcet,wafern,out)
+    totalstore(temp,time,source,sourcet,wafernumber,out)
    sheetresistance1(l)=slopes(in,out);
   sheetresistance=mean(sheetresistance1);
 
@@ -327,7 +328,7 @@ end
   clc
 fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f\n',sheetresistance,diffusionl)
   fprintf('Next using PV Lighthouse find your peak concentration and junction depth')
-  pause(5)
+  pause(2)
   pvlighthouse()
   clc
   fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f\n',sheetresistance,diffusionl)
@@ -383,7 +384,7 @@ fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f
     temp=input('What temperture did you run pre-dep at in Celsius? (Zone 3)\n');                           %
     truetemp=input('What temperatures did the furnace stabilize to? [zone1,zone2,zone3]\n');    %   Paramters of pre dep fuck I need to make another if statement for pre dep vs drive in lowkey probably make this all a function and use it like that later problem
     time=input('How long where the wafers in the furnace? (minutes)\n');  
-    diffusionl=diffusionlength(temp);
+    diffusionl=diffusionlength(temp,time);
     clc 
     
     %Giant data table of where collums start in excel
@@ -461,8 +462,8 @@ fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f
         fprintf('for location %f',l);
     out=input('What was your output voltages in mV? [voltage1, voltage2,...,voltagen]\nEnter these in the same order as your input currents (There should be twice as many)\nNote:If using standard input record all positive current then all negative current voltages\n');
     clc
-    
-    totalstore(temp,time,source,sourcet,wafern,out)
+  %%  
+    totalstore(temp,time,source,sourcet,wafernumber,out)
   sheetresistance1(l)=slopes(in,out);
   sheetresistance=mean(sheetresistance1);
 
@@ -470,10 +471,11 @@ end
     
   in=setsize(in);
   out=setsize(out);
- 
+
   clc
 fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f\n',sheetresistance,diffusionl)
   fprintf('Next using PV Lighthouse find your peak concentration and junction depth')
+  %%
   pause(5)
   pvlighthouse()
   clc
@@ -530,7 +532,7 @@ fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f
     temp=input('What temperture did you run pre-dep at in Celsius? (Zone 3)\n');                           %
     truetemp=input('What temperatures did the furnace stabilize to? [zone1,zone2,zone3]\n');    %   Paramters of pre dep fuck I need to make another if statement for pre dep vs drive in lowkey probably make this all a function and use it like that later problem
     time=input('How long where the wafers in the furnace? (minutes)\n');  
-    diffusionl=diffusionlength(temp);
+    diffusionl=diffusionlength(temp,time);
     clc 
     
  %%
@@ -608,7 +610,7 @@ for l=1:loc
     out=input('What was your output voltages in mV? [voltage1, voltage2,...,voltagen]\nEnter these in the same order as your input currents (There should be twice as many)\nNote:If using standard input record all positive current then all negative current voltages\n');
     clc
     
-    totalstore(temp,time,source,sourcet,wafern,out)
+    totalstore(temp,time,source,sourcet,wafernumber,out)
   sheetresistance1(l)=slopes(in,out);
   sheetresistance=mean(sheetresistance1);
 
@@ -672,7 +674,7 @@ elseif initial==2
 elseif initial==3
     temp=input('what new input temperture do you want to add (Celcius)?\n');
     time=input('what time do you wish to add (minutes)?\n');
-    sourcet=input('What type of source did you use?\n1. GS-245\n2. GS-139\n\3. TP-250\n4. TP-470');
+    sourcet=input('What type of source did you use?\n1. GS-245\n2. GS-139\n\3. TP-250\n4. TP-470\n');
     source=input('Which source are you using? (Use 1 if there is only one of that source).\n');
   
     clc
@@ -686,9 +688,9 @@ elseif initial==3
 elseif initial==4
     temp=input('What temperture did you run pre-dep at in Celsius? (Zone 3)\n');  
     time=input('How long where the wafers in the furnace? (minutes)\n'); 
-    sourcet=input('What type of source did you use?\n1. GS-245\n2. GS-139\n');
+    sourcet=input('What type of source did you use?\n1. GS-245\n2. GS-139\n3. TP-250\n4. TP-470');
     if sourcet==1
-        source=input('Which source did you use?\n1. GS-245-1     2. GS-245-2\n3. TP-250         4. TP-470');
+        source=input('Which source did you use?\n1. GS-245-1     2. GS-245-2\n');
     else
         source=1;
     end

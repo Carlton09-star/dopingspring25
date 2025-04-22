@@ -27,3 +27,21 @@ joycetj        02-Apr-2025 18:50:30      success Wafer number 1.000000
 joycetj        07-Apr-2025 15:58:17      
 success Wafer number 1.000000
 , wafer type 1.000000-1.000000 for 30.000000 at 1050.000000
+joycetj        21-Apr-2025 20:15:21      
+joycetj        21-Apr-2025 20:20:15      
+joycetj        21-Apr-2025 20:23:42      
+joycetj        21-Apr-2025 20:27:41      
+joycetj        21-Apr-2025 20:38:34      
+joycetj        21-Apr-2025 20:40:22      
+joycetj        21-Apr-2025 20:42:25      
+joycetj        21-Apr-2025 20:49:05      
+joycetj        21-Apr-2025 20:59:59      
+joycetj        21-Apr-2025 21:00:33      
+success Wafer number 1.000000
+, wafer type 2.000000-1.000000 for 60.000000 at 800.000000
+joycetj        21-Apr-2025 21:11:23      
+success Wafer number 1.000000
+, wafer type 2.000000-1.000000 for 60.000000 at 800.000000
+joycetj        21-Apr-2025 21:16:13      
+success Wafer number 1.000000
+, wafer type 2.000000-1.000000 for 60.000000 at 800.000000
