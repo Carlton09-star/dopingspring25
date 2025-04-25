@@ -4,6 +4,6 @@ function [slope]=slopes(x,y)
 p = polyfit(x, y, 1); % 1 indicates linear fit
 
 % Extract the slope from the coefficients
-slope = (p(1)*1000);
-slope=slope*pi/log(2);
+slope = (p(1));
+slope=slope*pi/log(2)*1000;
 end

@@ -3,7 +3,7 @@ name=sprintf('%d_%d_%d_%d.csv',temp,time,sourcet,source);
 part1="D:\dopingspring25\data\plots\";
 name1=part1+name;
 try 
-    readmatrix(name1)
+    readmatrix(name1);
 catch
     warning('Bad path to file please input the path to the data you are looking for')
     name1=input('');
@@ -23,7 +23,7 @@ xlabel('trial number')
 ylabel('Surface dopant atom count')
 xlim([0,col+1]);
 xticks(0:1:col+1);
-ylim([ymin,ymax])
+ylim([ymin,ymax]);
 
 end
 

@@ -177,6 +177,7 @@ fprintf(file,'%s        %s      \n',user,t);
         
     elseif stand==2
         in=input('What were your input currents in microamps? [current 1,current 2,...,current n]\nNote If there is no associated output value do not include it\n');
+        in=in*10^(-3);
     end
     clc
 for l=1:loc
@@ -308,6 +309,7 @@ end
         
     elseif stand==2
         in=input('What were your input currents in microamps? [current 1,current 2,...,current n]\nIf there is no associated output value do not include it\n');
+        in=in*(10^(-3));
     end
     clc
 for l=1:loc
@@ -455,6 +457,7 @@ fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f
         
     elseif stand==2
         in=input('What were your input currents in microamps? [current 1,current 2,...,current n]\nNote If there is no associated output value do not include it\n');
+        in=in*10^(-3);
     end
     clc
 
@@ -603,6 +606,7 @@ fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f
         
     elseif stand==2
         in=input('What were your input currents in microamps? [current 1,current 2,...,current n]\nNote If there is no associated output value do not include it\n');
+        in=in*10^(-3);
     end
     clc
 for l=1:loc
@@ -700,14 +704,18 @@ elseif initial==4
 elseif initial==5
     temp=input('What was the temperture of the relevant data in Celcius? (Zone 3)\n');
     time=input('How long were they in the furnace for (minutes)?\n');
-    sourcet=input('Which source was used?\n 1. GS-245        2. GS-139\n');
+    sourcet=input('Which source was used?\n 1. GS-245        2. GS-139\n3. TP-250       4. TP-470');
     if sourcet==1
         sheet='GS-245';
     elseif sourcet==2
         sheet='GS-139';
+    elseif sourcet==3
+        sheet='TP-250';
+    elseif sourcet==4
+        sheet='TP-470';
     end
     if sourcet==1
-        source=input('Which source did you use?\n1. G245-1     2. G245-2\n3. TP-250     4. TP-470\n');
+        source=input('Which source did you use?\n1. G245-1     2. G245-2\n');
     elseif (sourcet==2) || (sourcet==3) || (sourcet==4)
         source=1;
 
@@ -744,7 +752,7 @@ elseif initial==5
 
     %Grabs just the data relevent to the peak concentration and sheet
     %resistance and junction depth
-    peakconcr=filen(4:end,28);
+    peakconcr=filen(4:end,28); %Might be an issue with merged cells
     sheetres=filen(4:end,25);
     junct=filen(4:end,27);
     %Records the average standard deviation and standard error from the

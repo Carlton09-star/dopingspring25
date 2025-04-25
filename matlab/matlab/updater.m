@@ -45,6 +45,7 @@ fclose(fid);
 
 col1=numtol(s);
 col2=numtol(s+16);
+fillerrange=sprintf('%s1:%s1',col1,col2);
 range1=sprintf('%s3:%s3',col1,col2);
 col3=numtol(s+14);
 col4=numtol(s+23);
@@ -59,6 +60,7 @@ cells3={"Sheet Resistance","diffusion length (microns)","junction depth (microns
 writecell(cells1,path,'Sheet',sheet,'Range',range1)
 writecell(cells2,path,'Sheet',sheet,'Range',range2)
 writecell(cells3,path,'Sheet',sheet,'Range',range3)
+writecell(filler,path,'Sheet',sheet,'Range',fillerrange)
 
 name=sprintf('%d degrees Celcius for %d minutes source %d',temp,time,source);
 
