@@ -181,7 +181,7 @@ fprintf(file,'%s        %s      \n',user,t);
     end
     clc
 for l=1:loc
-    fprintf('for location %f',l);
+    fprintf('for location %d ',l);
     out=input('What was your output voltages in mV? [voltage1, voltage2,...,voltagen]\nEnter these in the same order as your input currents (There should be twice as many)\nNote:If using standard input record all positive current then all negative current voltages\n');
     clc
   totalstore(temp,time,source,sourcet,wafernumber,out)

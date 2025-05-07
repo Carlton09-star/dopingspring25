@@ -10,7 +10,7 @@ elseif sourcet==4
 end
 
 dat=readmatrix(path,'Sheet',sheet);
-dat=dat(1:3,:);
+dat=dat(1:2,:);
 [~,col]=size(dat);
 s=col+1;
 
@@ -60,7 +60,7 @@ cells3={"Sheet Resistance","diffusion length (microns)","junction depth (microns
 writecell(cells1,path,'Sheet',sheet,'Range',range1)
 writecell(cells2,path,'Sheet',sheet,'Range',range2)
 writecell(cells3,path,'Sheet',sheet,'Range',range3)
-writecell(filler,path,'Sheet',sheet,'Range',fillerrange)
+writematrix('filler',path,'Sheet',sheet,'Range',fillerrange)
 
 name=sprintf('%d degrees Celcius for %d minutes source %d',temp,time,source);
 
