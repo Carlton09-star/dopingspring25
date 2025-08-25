@@ -11,5 +11,5 @@ If I frequently use 10 micro amps 100 micro amps and 1 milliamp as testing curre
 
 
 
-In Order to use the Program download all files and then run the file titled RUN\_ME.
+In Order to use the Program download all files in the Program folder and then run the file titled RUN\_ME.
 
