@@ -10,7 +10,9 @@ elseif sourcet==4
 end
 
 dat=readmatrix(path,'Sheet',sheet);
+if ~isempty(dat)
 dat=dat(1:2,:);
+end
 [~,col]=size(dat);
 s=col+1;
 

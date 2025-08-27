@@ -109,15 +109,9 @@ fprintf(file,'%s        %s      \n',user,t);
     clc 
    
   %%
-    %Giant data table of where collums start in excel
-    collums=collumfinderb(sourcet,source,temp,time,s);
-
-    if collums==-1
-        collums=extractor(temp,time,source,sourcet);
-        
-    end
-    %If it is still = to -1
-    if collums==-1
+    %Consults json files to determine location
+  collums=extractor(temp,time,source,sourcet);
+    if isempty(collums)
     error(('invalid paramters for source double check entered parameters match what is allowed with source and set as an option in this program.'))
     end
    %%
@@ -185,7 +179,7 @@ for l=1:loc
     out=input('What was your output voltages in mV? [voltage1, voltage2,...,voltagen]\nEnter these in the same order as your input currents (There should be twice as many)\nNote:If using standard input record all positive current then all negative current voltages\n');
     clc
   totalstore(temp,time,source,sourcet,wafernumber,out)
-  sheetresistance1(l)=slopes(in,out);
+    sheetresistance1(l)=slopes(in,out);
   sheetresistance=mean(sheetresistance1);
 
 end
@@ -244,15 +238,11 @@ end
     anneal=input('How long was your anneal after pre dep? (minutes)\n');
     diffusionl=diffusionlength(temp,time);
     clc 
-    %Edit this so that it works for gs-245
-    collums=collumfinderb(sourcet,source,temp,time,s);
-    if collums==-1
-        collums=extractor(temp,time,source,sourcet);
-    end
-
-if collums==-1
+    %Consults json files to determine location
+  collums=extractor(temp,time,source,sourcet);
+    if isempty(collums)
     error(('invalid paramters for source double check entered parameters match what is allowed with source and set as an option in this program.'))
-end
+    end
  
    
         coll=numtol(collums);
@@ -389,15 +379,9 @@ fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f
     diffusionl=diffusionlength(temp,time);
     clc 
     
-    %Giant data table of where collums start in excel
-    collums=collumfinderb(sourcet,source,temp,time,s);
-
-    if collums==-1
-        collums=extractor(temp,time,source,sourcet);
-        
-    end
-    %If it is still = to -1
-    if collums==-1
+    %Consults json files to determine location
+  collums=extractor(temp,time,source,sourcet);
+    if isempty(collums)
     error(('invalid paramters for source double check entered parameters match what is allowed with source and set as an option in this program.'))
     end
 
@@ -461,7 +445,7 @@ fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f
     end
     clc
 
-    for l=1:loc
+for l=1:loc
         fprintf('for location %f',l);
     out=input('What was your output voltages in mV? [voltage1, voltage2,...,voltagen]\nEnter these in the same order as your input currents (There should be twice as many)\nNote:If using standard input record all positive current then all negative current voltages\n');
     clc
@@ -539,15 +523,9 @@ fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f
     clc 
     
  %%
-    %Giant data table of where collums start in excel
-    collums=collumfinderb(sourcet,source,temp,time,s);
-
-    if collums==-1
-        collums=extractor(temp,time,source,sourcet);
-        
-    end
-    %If it is still = to -1
-    if collums==-1
+    %Consults json files to determine location
+  collums=extractor(temp,time,source,sourcet);
+    if isempty(collums)
     error(('invalid paramters for source double check entered parameters match what is allowed with source and set as an option in this program.'))
     end
    %%
@@ -718,18 +696,14 @@ elseif initial==5
         source=input('Which source did you use?\n1. G245-1     2. G245-2\n');
     elseif (sourcet==2) || (sourcet==3) || (sourcet==4)
         source=1;
-
-    %Grabs the correct section of data 
     end
-    collums=collumfinderb(sourcet,source,temp,time,s);
-    if collums==-1
-        collums=extractor(temp,time,source,sourcet);
-    end
-
-    if collums==-1
+    %%
+    %Consults json files to determine location
+  collums=extractor(temp,time,source,sourcet);
+    if isempty(collums)
     error(('invalid paramters for source double check entered parameters match what is allowed with source and set as an option in this program.'))
     end
-    
+    %%
     coll=numtol(collums);
     coole=numtol(collums+s-1);
     colr=sprintf('%s:%s',coll,coole);
