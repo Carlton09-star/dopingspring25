@@ -104,7 +104,7 @@ fprintf(file,'%s        %s      \n',user,t);
     temp=input('What temperture did you run pre-dep at in Celsius? (Zone 3)\n');                           %
     truetemp=input('What temperatures did the furnace stabilize to? [zone1,zone2,zone3]\n');    %   Paramters of pre dep fuck I need to make another if statement for pre dep vs drive in lowkey probably make this all a function and use it like that later problem
     time=input('How long where the wafers in the furnace? (minutes)\n');
-    anneal=input('How long was your anneal after pre dep?(minutes)\n');
+     anneal=input('How long was your anneal after pre dep and at what temp?(minutes-degrees C)\n');
     diffusionl=diffusionlength(temp,time);
     clc 
    
@@ -203,7 +203,7 @@ end
        
        idx2=idx+4;
       %% 
-        tot=[wafernumber,truetemp,in,out,sheetresistance,diffusionl,junctiond,peakconc,anneal];
+        tot=[wafernumber,truetemp,in*10^3,out,sheetresistance,diffusionl,junctiond,peakconc,anneal];
         tot=zer(tot);
         range=sprintf('%s%d:%s%d',coll,idx2,coole,idx2);
       
@@ -235,11 +235,12 @@ end
     temp=input('What temperture did you run pre-dep at in Celsius? (Zone 3)\n');                           %
     truetemp=input('What temperatures did the furnace stabilize to? [zone1,zone2,zone3]\n');    %   Paramters of pre dep fuck I need to make another if statement for pre dep vs drive in lowkey probably make this all a function and use it like that later problem
     time=input('How long where the wafers in the furnace? (minutes)\n');  
-    anneal=input('How long was your anneal after pre dep? (minutes)\n');
+     anneal=input('How long was your anneal after pre dep and at what temp?(minutes-degrees C)\n');
     diffusionl=diffusionlength(temp,time);
     clc 
     %Consults json files to determine location
   collums=extractor(temp,time,source,sourcet);
+  clc
     if isempty(collums)
     error(('invalid paramters for source double check entered parameters match what is allowed with source and set as an option in this program.'))
     end
@@ -271,7 +272,7 @@ end
 
 
     if stand==1
-        fprintf('It is assumed you used both the positive and negative currents listed in the options.(You should have twice as many outputs as there are listed currents)\n')
+        fprintf('It is assumed you used both the positive and negative currents listed in the options.\n(You should have twice as many outputs as there are listed currents)\n')
         fprintf('Which option in Micro amps?\n')
         standprinter()
         choice=input('');
@@ -315,7 +316,7 @@ for l=1:loc
 end
     
   in=setsize(in);
-  out=setsize(out);
+  out=setsize(transpose(out));
  
   clc
 fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f\n',sheetresistance,diffusionl)
@@ -336,7 +337,7 @@ fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f
        
        idx2=idx+4;
      
-        tot=[wafernumber,truetemp,in,out,sheetresistance,diffusionl,junctiond,peakconc,anneal];
+        tot=[wafernumber,truetemp,in*10^3,out,sheetresistance,diffusionl,junctiond,peakconc,anneal];
         tot=zer(tot);
         range=sprintf('%s%d:%s%d',coll,idx2,coole,idx2);
       
@@ -479,7 +480,7 @@ fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f
        
        idx2=idx+4;
       %% 
-        tot=[wafernumber,truetemp,in,out,sheetresistance,diffusionl,junctiond,peakconc];
+        tot=[wafernumber,truetemp,in*10^3,out,sheetresistance,diffusionl,junctiond,peakconc];
         tot=zer(tot);
         range=sprintf('%s%d:%s%d',coll,idx2,coole,idx2);
       
@@ -619,7 +620,7 @@ fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f
        
        idx2=idx+4;
       %% 
-        tot=[wafernumber,truetemp,in,out,sheetresistance,diffusionl,junctiond,peakconc];
+        tot=[wafernumber,truetemp,in*10^3,out,sheetresistance,diffusionl,junctiond,peakconc];
         tot=zer(tot);
         range=sprintf('%s%d:%s%d',coll,idx2,coole,idx2);
       
