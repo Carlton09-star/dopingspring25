@@ -104,7 +104,7 @@ fprintf(file,'%s        %s      \n',user,t);
     temp=input('What temperture did you run pre-dep at in Celsius? (Zone 3)\n');                           %
     truetemp=input('What temperatures did the furnace stabilize to? [zone1,zone2,zone3]\n');    %   Paramters of pre dep fuck I need to make another if statement for pre dep vs drive in lowkey probably make this all a function and use it like that later problem
     time=input('How long where the wafers in the furnace? (minutes)\n');
-     anneal=input('How long was your anneal after pre dep and at what temp?(minutes-degrees C)\n');
+     anneal=input('How long was your anneal after pre dep and at what temp?(minutes.degrees C)\n','s');
     diffusionl=diffusionlength(temp,time);
     clc 
    
@@ -120,7 +120,7 @@ fprintf(file,'%s        %s      \n',user,t);
         coole=numtol(collums+s-1);
         colr=sprintf('%s:%s',coll,coole);
        
-       colr3=numtol(collums+s-3);
+       colr3=numtol(collums+s-4);
     
 
         filen=readmatrix(path,'sheet',sheet,'range',colr);
@@ -204,7 +204,7 @@ end
        
        idx2=idx+4;
       %% 
-        tot=[wafernumber,truetemp,in*10^3,out,sheetresistance,diffusionl,junctiond,peakconc,anneal];
+        tot=[wafernumber,truetemp,in*10^3,out,sheetresistance,diffusionl,junctiond,peakconc];
         tot=zer(tot);
         range=sprintf('%s%d:%s%d',coll,idx2,coole,idx2);
       
@@ -213,7 +213,7 @@ end
   
       %% 
        writematrix(tot,path,'Sheet',sheet,'FileType','spreadsheet','Range',range)
-       writecell({backsheet,subst,bdt},path,'Sheet',sheet,'FileType','spreadsheet','Range',range3)
+       writecell({anneal,backsheet,subst,bdt},path,'Sheet',sheet,'FileType','spreadsheet','Range',range3)
        datastorer(temp,time,sourcet,source,wafernumber,peakconc)
 %%
        fprintf(file,'success Wafer number %3f\n, wafer type %3f-%3f for %3f at %3f\n',wafernumber,sourcet,source,time,temp);
@@ -236,7 +236,7 @@ end
     temp=input('What temperture did you run pre-dep at in Celsius? (Zone 3)\n');                           %
     truetemp=input('What temperatures did the furnace stabilize to? [zone1,zone2,zone3]\n');    %   Paramters of pre dep fuck I need to make another if statement for pre dep vs drive in lowkey probably make this all a function and use it like that later problem
     time=input('How long where the wafers in the furnace? (minutes)\n');  
-     anneal=input('How long was your anneal after pre dep and at what temp?(minutes-degrees C)\n');
+     anneal=input('How long was your anneal after pre dep and at what temp?(minutes.degrees C)\n','s');
     diffusionl=diffusionlength(temp,time);
     clc 
     %Consults json files to determine location
@@ -251,7 +251,7 @@ end
         coole=numtol(collums+s-1);
         colr=sprintf('%s:%s',coll,coole);
        
-       colr3=numtol(collums+s-3);
+       colr3=numtol(collums+s-4);
        
         
         filen=readmatrix(path,'sheet',sheet,'range',colr);
@@ -307,7 +307,7 @@ end
     clc
 for l=1:loc
     clc
-    fprintf('for location %f',l);
+    fprintf('for location %d ',l);
     out=input('What was your output voltages in mV? [voltage1, voltage2,...,voltagen]\nEnter these in the same order as your input currents (There should be twice as many)\nNote:If using standard input record all positive current then all negative current voltages\n');
     clc
 
@@ -339,7 +339,7 @@ fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f
        
        idx2=idx+4;
      
-        tot=[wafernumber,truetemp,in*10^3,out,sheetresistance,diffusionl,junctiond,peakconc,anneal];
+        tot=[wafernumber,truetemp,in*10^3,out,sheetresistance,diffusionl,junctiond,peakconc];
         tot=zer(tot);
         range=sprintf('%s%d:%s%d',coll,idx2,coole,idx2);
       
@@ -348,7 +348,7 @@ fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f
   
     
        writematrix(tot,path,'Sheet',sheet,'FileType','spreadsheet','Range',range)
-       writecell({backsheet,subst,bdt},path,'Sheet',sheet,'FileType','spreadsheet','Range',range3)
+       writecell({anneal,backsheet,subst,bdt},path,'Sheet',sheet,'FileType','spreadsheet','Range',range3)
        datastorer(temp,time,sourcet,source,wafernumber,peakconc)
 
        fprintf(file,'success Wafer number %3f\n, wafer type %3f-%3f for %3f at %3f\n',wafernumber,sourcet,source,time,temp);
@@ -359,7 +359,7 @@ fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f
             
     source=1;
     type='Phos';
-   
+    s=32;
     sheet='TP-250';
     clc
     %
@@ -378,7 +378,8 @@ fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f
 
     temp=input('What temperture did you run pre-dep at in Celsius? (Zone 3)\n');                           %
     truetemp=input('What temperatures did the furnace stabilize to? [zone1,zone2,zone3]\n');    %   Paramters of pre dep fuck I need to make another if statement for pre dep vs drive in lowkey probably make this all a function and use it like that later problem
-    time=input('How long where the wafers in the furnace? (minutes)\n');  
+    time=input('How long where the wafers in the furnace? (minutes)\n'); 
+     anneal=input('How long was your anneal after pre dep and at what temp?(minutes.degrees C)\n','s');
     diffusionl=diffusionlength(temp,time);
     clc 
     
@@ -394,7 +395,7 @@ fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f
         coole=numtol(collums+s-1);
         colr=sprintf('%s:%s',coll,coole);
        
-       colr3=numtol(collums+s-3);
+       colr3=numtol(collums+s-4);
     
 
         filen=readmatrix(path,'sheet',sheet,'range',colr);
@@ -450,7 +451,7 @@ fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f
     clc
 
 for l=1:loc
-        fprintf('for location %f',l);
+        fprintf('for location %d ',l);
     out=input('What was your output voltages in mV? [voltage1, voltage2,...,voltagen]\nEnter these in the same order as your input currents (There should be twice as many)\nNote:If using standard input record all positive current then all negative current voltages\n');
     clc
   %%  
@@ -473,11 +474,6 @@ fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f
   fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f\n',sheetresistance,diffusionl)
   peakconc=input('Please use PV lighthouse and input your N__peak in atoms/cm^3\n');
   junctiond=input('please input your junction depth in microns\n');
-  
-  
-  
-
-  
 
    
        
@@ -492,7 +488,7 @@ fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f
   
       %% 
        writematrix(tot,path,'Sheet',sheet,'FileType','spreadsheet','Range',range)
-       writecell({backsheet,subst,bdt},path,'Sheet',sheet,'FileType','spreadsheet','Range',range3)
+       writecell({anneal,backsheet,subst,bdt},path,'Sheet',sheet,'FileType','spreadsheet','Range',range3)
        datastorer(temp,time,sourcet,source,wafernumber,peakconc)
 %%
        fprintf(file,'success Wafer number %3f\n, wafer type %3f-%3f for %3f at %3f\n',wafernumber,sourcet,source,time,temp);
@@ -504,7 +500,7 @@ fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f
             
     source=1;
     type="Phos";
-   
+   s=32;
     sheet='TP-470';
     clc
     %
@@ -522,7 +518,8 @@ fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f
 
     temp=input('What temperture did you run pre-dep at in Celsius? (Zone 3)\n');                           %
     truetemp=input('What temperatures did the furnace stabilize to? [zone1,zone2,zone3]\n');    %   Paramters of pre dep fuck I need to make another if statement for pre dep vs drive in lowkey probably make this all a function and use it like that later problem
-    time=input('How long where the wafers in the furnace? (minutes)\n');  
+    time=input('How long where the wafers in the furnace? (minutes)\n'); 
+     anneal=input('How long was your anneal after pre dep and at what temp?(minutes.degrees C)\n','s');
     diffusionl=diffusionlength(temp,time);
     clc 
     
@@ -538,7 +535,7 @@ fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f
         coole=numtol(collums+s-1);
         colr=sprintf('%s:%s',coll,coole);
        
-       colr3=numtol(collums+s-3);
+       colr3=numtol(collums+s-4);
     
 
         filen=readmatrix(path,'sheet',sheet,'range',colr);
@@ -593,7 +590,7 @@ fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f
     end
     clc
 for l=1:loc
-    fprintf('for location %f',l);
+    fprintf('for location %d ',l);
     out=input('What was your output voltages in mV? [voltage1, voltage2,...,voltagen]\nEnter these in the same order as your input currents (There should be twice as many)\nNote:If using standard input record all positive current then all negative current voltages\n');
     clc
     
@@ -633,7 +630,7 @@ fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f
   
       %% 
        writematrix(tot,path,'Sheet',sheet,'FileType','spreadsheet','Range',range)
-       writecell({backsheet,subst,bdt},path,'Sheet',sheet,'FileType','spreadsheet','Range',range3)
+       writecell({anneal,backsheet,subst,bdt},path,'Sheet',sheet,'FileType','spreadsheet','Range',range3)
        datastorer(temp,time,sourcet,source,wafernumber,peakconc)
 %%
        fprintf(file,'success Wafer number %3f\n, wafer type %3f-%3f for %3f at %3f\n',wafernumber,sourcet,source,time,temp);
