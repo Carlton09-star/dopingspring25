@@ -61,3 +61,16 @@ joycet        28-Aug-2025 13:38:34
 joycetj        28-Aug-2025 13:38:51      
 joycetj        28-Aug-2025 13:39:42      
 joycejt        28-Aug-2025 13:41:38      
+joycetj        31-Aug-2025 19:37:18      
+success Wafer number 1.000000
+, wafer type 2.000000-1.000000 for 90.000000 at 950.000000
+joycetj        31-Aug-2025 19:41:23      
+joycetj        31-Aug-2025 19:42:39      
+success Wafer number 1.000000
+, wafer type 2.000000-1.000000 for 60.000000 at 1050.000000
+joycetj        31-Aug-2025 19:52:42      
+success Wafer number 1.000000
+, wafer type 2.000000-1.000000 for 30.000000 at 1050.000000
+joycetj        31-Aug-2025 19:56:55      
+success Wafer number 1.000000
+, wafer type 2.000000-1.000000 for 30.000000 at 995.000000

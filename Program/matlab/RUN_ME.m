@@ -172,6 +172,7 @@ fprintf(file,'%s        %s      \n',user,t);
     elseif stand==2
         in=input('What were your input currents in microamps? [current 1,current 2,...,current n]\nNote If there is no associated output value do not include it\n');
         in=in*10^(-3);
+        in=transpose(in);
     end
     clc
 for l=1:loc
@@ -184,7 +185,7 @@ for l=1:loc
 
 end
   in=setsize(in);
-  out=setsize(out);
+  out=setsize(transpose(out));
  
   clc
   fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f\n',sheetresistance,diffusionl)
@@ -301,6 +302,7 @@ end
     elseif stand==2
         in=input('What were your input currents in microamps? [current 1,current 2,...,current n]\nIf there is no associated output value do not include it\n');
         in=in*(10^(-3));
+        in=transpose(in);
     end
     clc
 for l=1:loc
@@ -443,6 +445,7 @@ fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f
     elseif stand==2
         in=input('What were your input currents in microamps? [current 1,current 2,...,current n]\nNote If there is no associated output value do not include it\n');
         in=in*10^(-3);
+        in=transpose(in);
     end
     clc
 
@@ -458,7 +461,7 @@ for l=1:loc
 end
     
   in=setsize(in);
-  out=setsize(out);
+  out=setsize(transpose(out));
 
   clc
 fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f\n',sheetresistance,diffusionl)
@@ -586,6 +589,7 @@ fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f
     elseif stand==2
         in=input('What were your input currents in microamps? [current 1,current 2,...,current n]\nNote If there is no associated output value do not include it\n');
         in=in*10^(-3);
+        in=transpose(in);
     end
     clc
 for l=1:loc
@@ -600,7 +604,7 @@ for l=1:loc
 end
     
   in=setsize(in);
-  out=setsize(out);
+  out=setsize(transpose(out));
  
   clc
 fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f\n',sheetresistance,diffusionl)
