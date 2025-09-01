@@ -1,29 +1,49 @@
 function []=standprinter()
-% Define the matrix
 [stand1,stand2,stand3,stand4,stand5,stand6,stand7,stand8,stand9]=stored;
-matrix=[stand1,stand2,stand3,stand4,stand5,stand6,stand7,stand8,stand9];
-% Get the size of the matrix
-[rows, cols] = size(matrix);
+[s1,~]=size(stand1);
+[s2,~]=size(stand2);
+[s3,~]=size(stand3);
+[s4,~]=size(stand4);
+[s5,~]=size(stand5);
+[s6,~]=size(stand6);
+[s7,~]=size(stand7);
+[s8,~]=size(stand8);
+[s9,~]=size(stand9);
 
-% Loop through each element and print it
-fprintf('1. ')
-counter=1;
-for k=1:cols
-used=matrix(:,k);
-[rows1,cols1]=size(used);
-for i = 1:rows1
-    for j = 1:cols1
-        fprintf('%d ', used(i, j));
-    end
-    
+fprintf('1. ') 
+for k=1:s1
+    fprintf('%d ',stand1(k) )
 end
-
- counter=counter+1;
- fprintf('\n')
- if counter==10
-     break
- end
-
-fprintf('%d. ',counter); % New line after each row
-   
+fprintf('\n2. ')
+for l=1:s2
+    fprintf('%d ',stand2(k))
 end
+fprintf('\n3. ')
+for k=1:s3
+    fprintf('%d ',stand3(k))
+end
+fprintf('\n4. ')
+for k=1:s4
+    fprintf('%d ',stand4(k))
+end
+fprintf('\n5. ')
+for k=1:s5
+    fprintf('%d ',stand5(k))
+end
+fprintf('\n6. ')
+for k=1:s6
+    fprintf('%d ',stand6(k))
+end
+fprintf('\n7. ')
+for k=1:s7
+    fprintf('%d ',stand7(k))
+end
+fprintf('\n8. ')
+for k=1:s8
+    fprintf('%d ',stand8(k))
+end
+fprintf('\n9. ')
+for k=1:s9
+    fprintf('%d ', stand9(k))
+end
+fprintf('\n')
