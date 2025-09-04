@@ -105,7 +105,7 @@ fprintf(file,'%s        %s      \n',user,t);
     truetemp=input('What temperatures did the furnace stabilize to? [zone1,zone2,zone3]\n');    %   Paramters of pre dep fuck I need to make another if statement for pre dep vs drive in lowkey probably make this all a function and use it like that later problem
     time=input('How long where the wafers in the furnace? (minutes)\n');
      anneal=input('How long was your anneal after pre dep and at what temp?(minutes.degrees C)\n','s');
-    diffusionl=diffusionlength(temp,time);
+    diffusionl=diffusionlength(temp,time,sourcet);
     clc 
    
   %%
@@ -237,7 +237,7 @@ end
     truetemp=input('What temperatures did the furnace stabilize to? [zone1,zone2,zone3]\n');    %   Paramters of pre dep fuck I need to make another if statement for pre dep vs drive in lowkey probably make this all a function and use it like that later problem
     time=input('How long where the wafers in the furnace? (minutes)\n');  
      anneal=input('How long was your anneal after pre dep and at what temp?(minutes.degrees C)\n','s');
-    diffusionl=diffusionlength(temp,time);
+    diffusionl=diffusionlength(temp,time,sourcet);
     clc 
     %Consults json files to determine location
   collums=extractor(temp,time,source,sourcet);
@@ -380,7 +380,7 @@ fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f
     truetemp=input('What temperatures did the furnace stabilize to? [zone1,zone2,zone3]\n');    %   Paramters of pre dep fuck I need to make another if statement for pre dep vs drive in lowkey probably make this all a function and use it like that later problem
     time=input('How long where the wafers in the furnace? (minutes)\n'); 
      anneal=input('How long was your anneal after pre dep and at what temp?(minutes.degrees C)\n','s');
-    diffusionl=diffusionlength(temp,time);
+    diffusionl=diffusionlength(temp,time,courcet);
     clc 
     
     %Consults json files to determine location
@@ -520,7 +520,7 @@ fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f
     truetemp=input('What temperatures did the furnace stabilize to? [zone1,zone2,zone3]\n');    %   Paramters of pre dep fuck I need to make another if statement for pre dep vs drive in lowkey probably make this all a function and use it like that later problem
     time=input('How long where the wafers in the furnace? (minutes)\n'); 
      anneal=input('How long was your anneal after pre dep and at what temp?(minutes.degrees C)\n','s');
-    diffusionl=diffusionlength(temp,time);
+    diffusionl=diffusionlength(temp,time,sourcet);
     clc 
     
  %%
