@@ -101,10 +101,13 @@ fprintf(file,'%s        %s      \n',user,t);
     %   Pre-dep Profiling
     %   
 
-    temp=input('What temperture did you run pre-dep at in Celsius? (Zone 3)\n');                           %
+    temp=input('What temperture did you run pre-dep at in Celsius? (Zone 3)\n'); %
+    if input('Did you Anneal? \n1. Yes\n2. No\n')==1
+        anneal=input('How long was your anneal after pre dep and at what temp?(minutes--degrees C)\n','s');
+    end
     truetemp=input('What temperatures did the furnace stabilize to? [zone1,zone2,zone3]\n');    %   Paramters of pre dep fuck I need to make another if statement for pre dep vs drive in lowkey probably make this all a function and use it like that later problem
     time=input('How long where the wafers in the furnace? (minutes)\n');
-     anneal=input('How long was your anneal after pre dep and at what temp?(minutes.degrees C)\n','s');
+     
     diffusionl=diffusionlength(temp,time,sourcet);
     clc 
    
@@ -148,23 +151,23 @@ fprintf(file,'%s        %s      \n',user,t);
         standprinter()
         choice=input('');
         if choice==1
-           in=[stand1*10^(-3),-stand1*10^(-3)];           
+           in=[stand1*10^(-3);stand1*10^(-3)];           
     elseif choice==2
-        in=[stand2*10^(-3),-stand2*10^(-3)];
+        in=[stand2*10^(-3);-stand2*10^(-3)];
     elseif choice==3
-        in=[stand3*10^(-3),-stand3*10^(-3)];
+        in=[stand3*10^(-3);-stand3*10^(-3)];
             elseif choice==4
-        in=[stand4*10^(-3),-stand4*10^(-3)];
+        in=[stand4*10^(-3);-stand4*10^(-3)];
             elseif choice==5
-        in=[stand5*10^(-3),-stand5*10^(-3)];
+        in=[stand5*10^(-3);-stand5*10^(-3)];
             elseif choice==6
-        in=[stand6*10^(-3),-stand6*10^(-3)];
+        in=[stand6*10^(-3);-stand6*10^(-3)];
             elseif choice==7
-        in=[stand7*10^(-3),-stand7*10^(-3)];
+        in=[stand7*10^(-3);-stand7*10^(-3)];
             elseif choice==8
-        in=[stand8*10^(-3),-stand8*10^(-3)];
+        in=[stand8*10^(-3);-stand8*10^(-3)];
             elseif choice==9
-        in=[stand9*10^(-3),-stand9*10^(-3)];
+        in=[stand9*10^(-3);-stand9*10^(-3)];
 
         end
         %Not a custom input
@@ -233,10 +236,12 @@ end
     else 
         end
 
-    temp=input('What temperture did you run pre-dep at in Celsius? (Zone 3)\n');                           %
+    temp=input('What temperture did you run pre-dep at in Celsius? (Zone 3)\n');
+        if input('Did you Anneal? \n1. Yes\n2. No\n')==1
+        anneal=input('How long was your anneal after pre dep and at what temp?(minutes--degrees C)\n','s');
+        end
     truetemp=input('What temperatures did the furnace stabilize to? [zone1,zone2,zone3]\n');    %   Paramters of pre dep fuck I need to make another if statement for pre dep vs drive in lowkey probably make this all a function and use it like that later problem
     time=input('How long where the wafers in the furnace? (minutes)\n');  
-     anneal=input('How long was your anneal after pre dep and at what temp?(minutes.degrees C)\n','s');
     diffusionl=diffusionlength(temp,time,sourcet);
     clc 
     %Consults json files to determine location
@@ -278,23 +283,23 @@ end
         standprinter()
         choice=input('');
         if choice==1
-           in=[stand1*10^(-3),-stand1*10^(-3)];           
+           in=[stand1*10^(-3);-stand1*10^(-3)];           
     elseif choice==2
-        in=[stand2*10^(-3),-stand2*10^(-3)];
+        in=[stand2*10^(-3);-stand2*10^(-3)];
     elseif choice==3
-        in=[stand3*10^(-3),-stand3*10^(-3)];
+        in=[stand3*10^(-3);-stand3*10^(-3)];
             elseif choice==4
-        in=[stand4*10^(-3),-stand4*10^(-3)];
+        in=[stand4*10^(-3);-stand4*10^(-3)];
             elseif choice==5
-        in=[stand5*10^(-3),-stand5*10^(-3)];
+        in=[stand5*10^(-3);-stand5*10^(-3)];
             elseif choice==6
-        in=[stand6*10^(-3),-stand6*10^(-3)];
+        in=[stand6*10^(-3);-stand6*10^(-3)];
             elseif choice==7
-        in=[stand7*10^(-3),-stand7*10^(-3)];
+        in=[stand7*10^(-3);-stand7*10^(-3)];
             elseif choice==8
-        in=[stand8*10^(-3),-stand8*10^(-3)];
+        in=[stand8*10^(-3);-stand8*10^(-3)];
             elseif choice==9
-        in=[stand9*10^(-3),-stand9*10^(-3)];
+        in=[stand9*10^(-3);-stand9*10^(-3)];
 
         end
         %Not a custom input
@@ -376,11 +381,13 @@ fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f
     %   Pre-dep Profiling
     %   
 
-    temp=input('What temperture did you run pre-dep at in Celsius? (Zone 3)\n');                           %
+    temp=input('What temperture did you run pre-dep at in Celsius? (Zone 3)\n'); 
+    if input('Did you Anneal? \n1. Yes\n2. No\n')==1
+        anneal=input('How long was your anneal after pre dep and at what temp?(minutes--degrees C)\n','s');
+    end%
     truetemp=input('What temperatures did the furnace stabilize to? [zone1,zone2,zone3]\n');    %   Paramters of pre dep fuck I need to make another if statement for pre dep vs drive in lowkey probably make this all a function and use it like that later problem
     time=input('How long where the wafers in the furnace? (minutes)\n'); 
-     anneal=input('How long was your anneal after pre dep and at what temp?(minutes.degrees C)\n','s');
-    diffusionl=diffusionlength(temp,time,courcet);
+    diffusionl=diffusionlength(temp,time,sourcet);
     clc 
     
     %Consults json files to determine location
@@ -422,23 +429,23 @@ fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f
         standprinter()
         choice=input('');
         if choice==1
-           in=[stand1*10^(-3),-stand1*10^(-3)];           
-    elseif choice==2
-        in=[stand2*10^(-3),-stand2*10^(-3)];
+           in=[stand1*10^(-3);-stand1*10^(-3)];           
+    elseif choice==2;
+        in=[stand2*10^(-3);-stand2*10^(-3)];
     elseif choice==3
-        in=[stand3*10^(-3),-stand3*10^(-3)];
+        in=[stand3*10^(-3);-stand3*10^(-3)];
             elseif choice==4
-        in=[stand4*10^(-3),-stand4*10^(-3)];
+        in=[stand4*10^(-3);-stand4*10^(-3)];
             elseif choice==5
-        in=[stand5*10^(-3),-stand5*10^(-3)];
+        in=[stand5*10^(-3);-stand5*10^(-3)];
             elseif choice==6
-        in=[stand6*10^(-3),-stand6*10^(-3)];
+        in=[stand6*10^(-3);-stand6*10^(-3)];
             elseif choice==7
-        in=[stand7*10^(-3),-stand7*10^(-3)];
+        in=[stand7*10^(-3);-stand7*10^(-3)];
             elseif choice==8
-        in=[stand8*10^(-3),-stand8*10^(-3)];
+        in=[stand8*10^(-3);-stand8*10^(-3)];
             elseif choice==9
-        in=[stand9*10^(-3),-stand9*10^(-3)];
+        in=[stand9*10^(-3);-stand9*10^(-3)];
 
         end
         %Not a custom input
@@ -516,10 +523,13 @@ fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f
     %   Pre-dep Profiling
     %   
 
-    temp=input('What temperture did you run pre-dep at in Celsius? (Zone 3)\n');                           %
+    temp=input('What temperture did you run pre-dep at in Celsius? (Zone 3)\n');       
+    if input('Did you Anneal? \n1. Yes\n2. No\n')==1
+        anneal=input('How long was your anneal after pre dep and at what temp?(minutes--degrees C)\n','s');
+    end
     truetemp=input('What temperatures did the furnace stabilize to? [zone1,zone2,zone3]\n');    %   Paramters of pre dep fuck I need to make another if statement for pre dep vs drive in lowkey probably make this all a function and use it like that later problem
     time=input('How long where the wafers in the furnace? (minutes)\n'); 
-     anneal=input('How long was your anneal after pre dep and at what temp?(minutes.degrees C)\n','s');
+     
     diffusionl=diffusionlength(temp,time,sourcet);
     clc 
     
@@ -562,23 +572,23 @@ fprintf('Your Sheet Resistance (Ohms/Square) is %f.\nYour diffusion length is %f
         standprinter()
         choice=input('');
         if choice==1
-           in=[stand1*10^(-3),-stand1*10^(-3)];           
+           in=[stand1*10^(-3);-stand1*10^(-3)];           
     elseif choice==2
-        in=[stand2*10^(-3),-stand2*10^(-3)];
+        in=[stand2*10^(-3);-stand2*10^(-3)];
     elseif choice==3
-        in=[stand3*10^(-3),-stand3*10^(-3)];
+        in=[stand3*10^(-3);-stand3*10^(-3)];
             elseif choice==4
-        in=[stand4*10^(-3),-stand4*10^(-3)];
+        in=[stand4*10^(-3);-stand4*10^(-3)];
             elseif choice==5
-        in=[stand5*10^(-3),-stand5*10^(-3)];
+        in=[stand5*10^(-3);-stand5*10^(-3)];
             elseif choice==6
-        in=[stand6*10^(-3),-stand6*10^(-3)];
+        in=[stand6*10^(-3);-stand6*10^(-3)];
             elseif choice==7
-        in=[stand7*10^(-3),-stand7*10^(-3)];
+        in=[stand7*10^(-3);-stand7*10^(-3)];
             elseif choice==8
-        in=[stand8*10^(-3),-stand8*10^(-3)];
+        in=[stand8*10^(-3);-stand8*10^(-3)];
             elseif choice==9
-        in=[stand9*10^(-3),-stand9*10^(-3)];
+        in=[stand9*10^(-3);-stand9*10^(-3)];
 
         end
         %Not a custom input

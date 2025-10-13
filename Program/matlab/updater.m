@@ -58,7 +58,7 @@ range3=sprintf('%s3:%s3',col5,col6);
 range4=sprintf('%s2:%s2',col1,col2);
 cells1={"Wafer #","zone 1 temp","zone 2 temp","zone 3 temp","input Current (milli Amps)"};
 cells2={"Reading (V)"};
-cells3={"Sheet Resistance","diffusion length (microns)","junction depth (microns)","Peak concentration","Anneal Time-temp","Backround Sheet resistance","Substrate","Backround doping type"};
+cells3={"Sheet Resistance","diffusion length (microns)","junction depth (microns)","Peak concentration","Anneal Time--temp","Backround Sheet resistance","Substrate","Backround doping type"};
 writecell(cells1,path,'Sheet',sheet,'Range',range1)
 writecell(cells2,path,'Sheet',sheet,'Range',range2)
 writecell(cells3,path,'Sheet',sheet,'Range',range3)
