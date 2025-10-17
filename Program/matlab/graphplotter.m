@@ -10,6 +10,8 @@ catch
 end
 
 data=readmatrix(name1);
+
+%% This is where I stopped converting to python
 [col,~]=size(data);
 x=data(1:2:end);
 y=data(2:2:end);
