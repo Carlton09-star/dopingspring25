@@ -1,7 +1,26 @@
-function [T, S] = structToTable(data, ...
+function [T, S] = structToTable2(data, ...
     sourceFilter, substrateFilter, typeFilter, ...
     PtempFilter, PtimeFilter, DtempFilter, DtimeFilter, ...
     trialFilter, includeCd, includeRs, includeIV)
+%%-------------------------------------------------------------------------
+%       1.  data
+%       2.  source*
+%       3.  substrate*
+%       4.  Pd/Dn*
+%       5.  Predeposition temperature (C)
+%       6.  Predeposition time (min)
+%       7.  Drive in temp **
+%       8.  Drive in time **
+%       9.  serieal # 
+%       10. include Cd
+%       11. Include Rs
+%       12. Include IV
+%       13. Include Backround Sheet Resistance
+%
+%       * NEEDS TO BE A STRING
+%       ** IF YOU ARE DOING PREDEPOSITION LEAVE IT AS []
+%
+%%--------------------------------------------------------------------------
 
     % Set defaults if not provided
     if nargin < 2, sourceFilter = []; end
@@ -104,16 +123,29 @@ function [T, S] = structToTable(data, ...
     if includeIV && ismember('IV', T.Properties.VariableNames)
         ivLengths = cellfun(@numel, T.IV);
         maxIV = max(ivLengths, [], 'omitnan');
-        for i = 1:maxIV
-            colname = sprintf('IV_%d', i);
-            T.(colname) = NaN(height(T), 1);
+for i = 1:maxIV
+    if mod(i, 2) == 1
+        suffix = '(in)';
+    else
+        suffix = '(out)';
+    end
+    colname = sprintf('IV_%d %s', i, suffix);
+    T.(colname) = NaN(height(T), 1);
+end
+
+for r = 1:height(T)
+    iv = T.IV{r};
+    for i = 1:min(numel(iv), maxIV)
+        if mod(i, 2) == 1
+            suffix = '(in)';
+        else
+            suffix = '(out)';
         end
-        for r = 1:height(T)
-            iv = T.IV{r};
-            for i = 1:min(numel(iv), maxIV)
-                T.(sprintf('IV_%d', i))(r) = iv(i);
-            end
-        end
+        colname = sprintf('IV_%d %s', i, suffix);
+        T.(colname)(r) = iv(i);
+    end
+end
+
         T.IV = [];
     end
 end
