@@ -32,3 +32,5 @@ data=addDopingData(data,sourcet,substrate,true,true,Pretemp,Pretime,1000,90,IV_d
 
 data=addDopingData(data,"TP250","Silicon",true,true,1000,60,1200,120,[1,2,3,-1,-2,-3;10,20,30,-10,-20,-30],100,1*10^(-20),100);
 data=addDopingData(data,"TP250","Silicon",true,false,900,90,[],[],[1,2,3,10,20,30],1000,3*10^(100),10);
+
+an=data
