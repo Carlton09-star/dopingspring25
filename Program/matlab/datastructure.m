@@ -21,16 +21,11 @@ trialn="t"+num2str(1);
 Cd_data=1*10^(26);
 Rs_data=100;
 IV_data=[1,10,100,-1,-10,-100;2,20,200,-2,-20,-200];
-data=[];
-data=addDopingData(data,sourcet,substrate,true,true,Pretemp,Pretime,1000,90,IV_data,Rs_data,Cd_data,1000);
+load('Data.mat')
+data=addDopingData(data,sourcet,substrate,true,true,Pretemp,Pretime,1000,90,IV_data,Rs_data,Cd_data,1000,1);
 
+data=addDopingData(data,"TP250","Silicon",true,true,1000,60,1200,120,[1,2,3,-1,-2,-3;10,20,30,-10,-20,-30],100,1*10^(-20),100,1);
 
+data=addDopingData(data,"TP250","Silicon",true,false,900,90,[],[],[1,2,3,10,20,30],1000,3*10^(100),10,1);
 
-%data=struct(sourcet,struct(substrate,struct('Pd',struct(Ptemp,struct(Ptime,struct(trialn,struct('Cd',Cd_data,'Rs',Rs_data,'IV',IV_data)))),'Dn',struct(Ptemp,struct(Ptime,struct(dtemp,struct(dtime,struct(trialn,struct('Cd',Cd_data,'Rs',Rs_data,'IV',IV_data)))))))));
-
-
-
-data=addDopingData(data,"TP250","Silicon",true,true,1000,60,1200,120,[1,2,3,-1,-2,-3;10,20,30,-10,-20,-30],100,1*10^(-20),100);
-data=addDopingData(data,"TP250","Silicon",true,false,900,90,[],[],[1,2,3,10,20,30],1000,3*10^(100),10);
-
-an=data
+an=data;

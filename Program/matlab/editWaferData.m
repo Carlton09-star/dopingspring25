@@ -1,5 +1,14 @@
 function data = editWaferData(data, sourcet, substrate, processType, temp, time, waferID, fieldToEdit, newValue)
     % Validate input
+
+    %data the structure name
+    % source t -> the type of source
+    % substrate
+    % processType -> Dn or Pd
+    % temp
+    %time
+    %wafer ID
+    %fieldToEdit Cdg_data IV_Data Cs_data Rs_data 
     if ~isstruct(data)
         error('Input data must be a struct.');
     end
