@@ -30,7 +30,7 @@ data = struct('stand1',stand1 , 'stand2', stand2, 'stand3',stand3, 'stand4',stan
 jsonText = jsonencode(data);
 
 % Specify the path to save the JSON file
-filePath = 'D:\dopingspring25\data.json';
+filePath = 'data.json';
 
 % Write the JSON string to the file
 fid = fopen(filePath, 'w');

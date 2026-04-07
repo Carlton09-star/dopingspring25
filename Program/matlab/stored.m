@@ -1,6 +1,6 @@
 function [stand1,stand2,stand3,stand4,stand5,stand6,stand7,stand8,stand9]=stored()
 % Step 1: Read the JSON file
-jsonText = fileread('D:\dopingspring25\data.json');
+jsonText = fileread('data.json');
 
 % Step 2: Decode the JSON string
 dataStruct = jsondecode(jsonText);
